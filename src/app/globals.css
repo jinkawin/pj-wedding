@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Great+Vibes&family=Lato:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-vibes: 'Great Vibes', cursive;
+  --font-lato: 'Lato', sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--font-lato);
+    background-color: #F5EDD6;
+    color: #5C4033;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .perspective-800 {
+    perspective: 800px;
+  }
+  .perspective-1200 {
+    perspective: 1200px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .font-cormorant {
+    font-family: var(--font-cormorant);
+  }
+  .font-vibes {
+    font-family: var(--font-vibes);
+  }
+  .font-lato {
+    font-family: var(--font-lato);
+  }
+}
+
+/* Explicit keyframes for inline animation usage */
+@keyframes cardRise {
+  0%   { transform: translateX(-50%) translateY(72%); opacity: 0; }
+  55%  { opacity: 1; }
+  100% { transform: translateX(-50%) translateY(0%); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0%   { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes sealShimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.78; }
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe,
+  .animate-sealShimmer,
+  .animate-sealCrack,
+  .animate-flapOpen,
+  .animate-cardRise,
+  .animate-fadeInUp {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: opacity 400ms ease !important;
+  }
+}

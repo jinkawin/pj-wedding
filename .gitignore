@@ -1,0 +1,53 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# build
+/.parcel-cache
+/dist
+/build
+/.next
+
+# dependencies
+/node_modules
+/.pnp
+/.yarn/cache/
+/.yarn/install-state.gz
+.pnp.js
+
+# testing
+/coverage
+/html
+
+# scanning
+/.scannerwork
+
+# env
+/.env.development
+
+# misc
+.DS_Store
+*.local
+
+# @vitjs/vit temporary directory
+.vit
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.eslintcache
+
+# load-test generated artifacts (keep folder structure)
+/tests/load/results/*
+!/tests/load/results/.gitkeep
+!/tests/load/results/smoke/
+!/tests/load/results/average/
+!/tests/load/results/stress/
+/tests/load/results/smoke/*
+!/tests/load/results/smoke/.gitkeep
+/tests/load/results/average/*
+!/tests/load/results/average/.gitkeep
+/tests/load/results/stress/*
+!/tests/load/results/stress/.gitkeep
+
+/tests/load/reports/*
+!/tests/load/reports/.gitkeep

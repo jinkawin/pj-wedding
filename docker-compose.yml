@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  application:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: ainu-ekyc/application:latest
+    ports:
+      - 127.0.0.1:3000:3000
+    restart: always
+
