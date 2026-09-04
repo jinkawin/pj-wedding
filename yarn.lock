@@ -4382,6 +4382,7 @@ __metadata:
     react-dom: "npm:^19.2.8"
     tailwindcss: "npm:^3.4.17"
     typescript: "npm:^5.7.3"
+    vite: "npm:^8.0.2"
     vitest: "npm:^4.1.11"
     zod: "npm:^4.5.4"
   languageName: unknown
@@ -5640,7 +5641,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0":
+"vite@npm:^6.0.0 || ^7.0.0 || ^8.0.0, vite@npm:^8.0.2":
   version: 8.2.2
   resolution: "vite@npm:8.2.2"
   dependencies:
