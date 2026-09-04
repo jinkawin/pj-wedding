@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import InvitationCard from '@/components/landing/InvitationCard'
 import WaxSeal from '@/components/landing/WaxSeal'
 
-type SceneState = 'idle' | 'open' | 'details'
+type SceneState = 'idle' | 'open'
 
 // The warm kraft/terracotta that fills the screen background
 const SCENE_BG = '#B87240'
@@ -18,17 +18,10 @@ export default function EnvelopeScene() {
   }, [scene])
 
   const handleEnterWebsite = useCallback(() => {
-    if (scene !== 'open') return
-    setScene('details')
-  }, [scene])
-
-  const handleBackToInvitation = useCallback(() => {
-    if (scene !== 'details') return
     setScene('open')
-  }, [scene])
+  }, [])
 
   const isOpen = scene === 'open'
-  const isDetails = scene === 'details'
 
   return (
     <main
@@ -132,9 +125,9 @@ export default function EnvelopeScene() {
 
         {/* Invitation card — rises from inside the envelope */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 w-[calc(100%-2.25rem)] max-w-[320px] sm:max-w-[340px] md:max-w-[380px]"
+          className="absolute left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-[330px] sm:max-w-[360px] md:max-w-[380px]"
           style={{
-            bottom: 'calc(min(45vh, 280px) - 172px)',
+            bottom: 'calc(min(34vh, 220px) - 36px)',
             animation: isOpen
               ? 'cardRise 700ms cubic-bezier(0.34, 1.25, 0.64, 1) 180ms both'
               : undefined,
@@ -143,90 +136,6 @@ export default function EnvelopeScene() {
           <InvitationCard isVisible={isOpen} onEnterWebsite={handleEnterWebsite} />
         </div>
       </div>
-
-      {/* ── DETAILS ── full wedding information */}
-      <section
-        className="absolute inset-0"
-        style={{
-          opacity: isDetails ? 1 : 0,
-          pointerEvents: isDetails ? 'auto' : 'none',
-          transition: 'opacity 350ms ease',
-          background: 'linear-gradient(180deg, #F6EFE2 0%, #F2E7D7 100%)',
-        }}
-        aria-hidden={!isDetails}
-      >
-        <div className="h-full overflow-y-auto px-5 py-8 sm:px-8">
-          <div className="mx-auto w-full max-w-[720px] rounded-sm border border-[#D8CCB8] bg-[#FAF7F1] p-6 sm:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.14)]">
-            <p
-              className="font-cormorant italic uppercase tracking-[0.22em]"
-              style={{ color: '#A89070', fontSize: '0.72rem' }}
-            >
-              Wedding Details
-            </p>
-
-            <h2
-              className="mt-2 font-vibes"
-              style={{ color: '#3B2A22', fontSize: 'clamp(2rem, 5vw, 3rem)', lineHeight: 1.05 }}
-            >
-              Jinkawin &amp; Parima
-            </h2>
-
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
-              <article className="rounded-sm border border-[#E2D8C6] bg-white/40 p-4">
-                <h3 className="font-cormorant font-semibold" style={{ color: '#5C4033', fontSize: '1.1rem' }}>
-                  Ceremony
-                </h3>
-                <p className="mt-2 font-lato" style={{ color: '#6E5242', fontSize: '0.9rem' }}>
-                  Saturday, 15 March 2025 at 10:00 AM
-                </p>
-                <p className="mt-1 font-lato" style={{ color: '#6E5242', fontSize: '0.9rem' }}>
-                  Bangkok, Thailand
-                </p>
-              </article>
-
-              <article className="rounded-sm border border-[#E2D8C6] bg-white/40 p-4">
-                <h3 className="font-cormorant font-semibold" style={{ color: '#5C4033', fontSize: '1.1rem' }}>
-                  Reception
-                </h3>
-                <p className="mt-2 font-lato" style={{ color: '#6E5242', fontSize: '0.9rem' }}>
-                  Lunch reception follows ceremony
-                </p>
-                <p className="mt-1 font-lato" style={{ color: '#6E5242', fontSize: '0.9rem' }}>
-                  Formal attire requested
-                </p>
-              </article>
-            </div>
-
-            <article className="mt-5 rounded-sm border border-[#E2D8C6] bg-white/40 p-4">
-              <h3 className="font-cormorant font-semibold" style={{ color: '#5C4033', fontSize: '1.1rem' }}>
-                Notes for Guests
-              </h3>
-              <ul className="mt-2 space-y-1 font-lato" style={{ color: '#6E5242', fontSize: '0.9rem' }}>
-                <li>Please arrive 30 minutes early for seating.</li>
-                <li>Parking and shuttle service will be available.</li>
-                <li>Kindly confirm attendance before 20 February 2025.</li>
-              </ul>
-            </article>
-
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <button
-                className="w-full sm:w-auto px-6 py-3 font-lato uppercase transition-opacity hover:opacity-85"
-                style={{
-                  background: 'linear-gradient(135deg, #C4714A, #A85E38)',
-                  color: '#FAF4EB',
-                  fontSize: '0.68rem',
-                  letterSpacing: '0.18em',
-                  borderRadius: '2px',
-                }}
-                onClick={handleBackToInvitation}
-                aria-label="Back to invitation card"
-              >
-                Back to Invitation
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }
