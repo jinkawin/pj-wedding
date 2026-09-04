@@ -1,6 +1,5 @@
 {
   "buildCommand": "yarn build",
   "devCommand": "yarn dev",
-  "installCommand": "corepack enable && yarn install --immutable",
-  "outputDirectory": ".next"
+  "installCommand": "corepack enable && yarn install --immutable"
 }
