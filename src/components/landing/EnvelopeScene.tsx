@@ -74,7 +74,7 @@ export default function EnvelopeScene() {
               lineHeight: 1.15,
             }}
           >
-            Jinkawin &amp;
+            Parima S. &amp;
           </div>
           <div
             className="font-vibes"
@@ -84,7 +84,7 @@ export default function EnvelopeScene() {
               lineHeight: 1.1,
             }}
           >
-            Parima
+            Jinkawin P.
           </div>
         </div>
 
@@ -164,9 +164,9 @@ function ClosedEnvelopeSVG() {
       <polygon points="0,0 300,0 150,95" fill="#E8E1D0" />
 
       {/* Fold lines */}
-      <line x1="0"   y1="0"   x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
-      <line x1="300" y1="0"   x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
-      <line x1="0"   y1="200" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.4" />
+      <line x1="0" y1="0" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
+      <line x1="300" y1="0" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
+      <line x1="0" y1="200" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.4" />
       <line x1="300" y1="200" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.4" />
 
       {/* Outer border */}
@@ -207,9 +207,9 @@ function OpenEnvelopeSVG() {
       <line x1="360" y1="50" x2="180" y2="-24" stroke="#CEC5B0" strokeWidth="0.8" opacity="0.5" />
 
       {/* Fold lines */}
-      <line x1="0"   y1="50"  x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
-      <line x1="360" y1="50"  x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
-      <line x1="0"   y1="258" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.45" />
+      <line x1="0" y1="50" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
+      <line x1="360" y1="50" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
+      <line x1="0" y1="258" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.45" />
       <line x1="360" y1="258" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.45" />
 
       {/* Outer border */}

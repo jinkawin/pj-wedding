@@ -17,7 +17,7 @@ function calculateTimeLeft(): TimeLeft {
   const diff = WEDDING_DATE.getTime() - Date.now()
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
 
-return {
+  return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
     hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((diff / 1000 / 60) % 60),
@@ -61,7 +61,7 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
     if (!isVisible) return
     const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
 
-return () => clearInterval(timer)
+    return () => clearInterval(timer)
   }, [isVisible])
 
   const delay = (ms: number) =>
@@ -109,7 +109,7 @@ return () => clearInterval(timer)
               lineHeight: 1.1,
             }}
           >
-            Jinkawin
+            Parima S.
           </h1>
           <p
             className="font-cormorant italic"
@@ -125,7 +125,7 @@ return () => clearInterval(timer)
               lineHeight: 1.1,
             }}
           >
-            Parima
+            Jinkawin P.
           </h1>
         </div>
 
