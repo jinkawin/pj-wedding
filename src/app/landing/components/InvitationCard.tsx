@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { weddingConfig } from '@/configs/app'
+import LanguageSwitcher from '@/components/navigation/LanguageSwitcher'
+import { useTranslation } from '@/locale/I18nContext'
 
 type TimeLeft = {
   days: number
@@ -52,6 +54,7 @@ type InvitationCardProps = {
 }
 
 export default function InvitationCard({ isVisible, onEnterWebsite }: InvitationCardProps) {
+  const { t } = useTranslation()
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
@@ -77,8 +80,13 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
         boxShadow: '0 4px 32px rgba(0,0,0,0.18)',
       }}
     >
+      {/* ── Top bar: Language switcher ── */}
+      <div className="absolute top-3 right-4 z-20" style={{ animation: delay(400) }}>
+        <LanguageSwitcher />
+      </div>
+
       {/* ── Botanical wreath border (SVG) ── */}
-      <div className="w-full px-5 pt-5 pb-0">
+      <div className="w-full px-5 pt-7 pb-0">
         <WreathTopSVG />
       </div>
 
@@ -96,7 +104,7 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
             animation: delay(500),
           }}
         >
-          Together with their families
+          {t('invitation.together')}
         </p>
 
         {/* Couple names */}
@@ -164,20 +172,20 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
             className="font-lato uppercase"
             style={{ color: '#A89070', fontSize: '0.58rem', letterSpacing: '0.16em', marginTop: '2px' }}
           >
-            Formal Attire Requested
+            {t('invitation.formalAttire')}
           </p>
         </div>
 
         {/* Countdown */}
-        <div style={{ animation: delay(1020) }} aria-live="polite" aria-label="Time until the wedding">
+        <div style={{ animation: delay(1020) }} aria-live="polite" aria-label={t('countdown.ariaLabel')}>
           <div className="flex gap-1.5 sm:gap-2 justify-center items-end">
-            <CountdownUnit value={timeLeft.days} label="Days" />
+            <CountdownUnit value={timeLeft.days} label={t('countdown.days')} />
             <span className="font-cormorant text-lg sm:text-xl pb-4 sm:pb-5" style={{ color: '#C4714A' }}>:</span>
-            <CountdownUnit value={timeLeft.hours} label="Hours" />
+            <CountdownUnit value={timeLeft.hours} label={t('countdown.hours')} />
             <span className="font-cormorant text-lg sm:text-xl pb-4 sm:pb-5" style={{ color: '#C4714A' }}>:</span>
-            <CountdownUnit value={timeLeft.minutes} label="Min" />
+            <CountdownUnit value={timeLeft.minutes} label={t('countdown.minutes')} />
             <span className="font-cormorant text-lg sm:text-xl pb-4 sm:pb-5" style={{ color: '#C4714A' }}>:</span>
-            <CountdownUnit value={timeLeft.seconds} label="Sec" />
+            <CountdownUnit value={timeLeft.seconds} label={t('countdown.seconds')} />
           </div>
         </div>
 
@@ -197,9 +205,9 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
             ['--tw-ring-color' as any]: '#C4714A',
           }}
           onClick={onEnterWebsite}
-          aria-label="Enter website to see wedding details"
+          aria-label={t('invitation.enterWebsite')}
         >
-          Enter Website
+          {t('invitation.enterWebsite')}
         </button>
 
         {/* Footer */}
@@ -211,7 +219,7 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
             animation: delay(1220),
           }}
         >
-          We look forward to celebrating with you
+          {t('invitation.lookForward')}
         </p>
       </div>
 

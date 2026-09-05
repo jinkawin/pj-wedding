@@ -1,0 +1,109 @@
+{
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "thai": "ไทย"
+  },
+  "nav": {
+    "overview": "Overview",
+    "location": "Location",
+    "about": "About Us",
+    "register": "Register"
+  },
+  "invitation": {
+    "together": "Together with their families",
+    "formalAttire": "Formal Attire Requested",
+    "enterWebsite": "Enter Website",
+    "lookForward": "We look forward to celebrating with you"
+  },
+  "countdown": {
+    "title": "Counting down to our big day",
+    "ariaLabel": "Time until the wedding",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Min",
+    "seconds": "Sec"
+  },
+  "overview": {
+    "subtitle": "Wedding Overview",
+    "title": "Parima & Jinkawin",
+    "description": "Welcome to our wedding celebration overview. Here you will find all the details regarding our schedule, venue, and registry.",
+    "backToInvitation": "← Back to Invitation"
+  },
+  "location": {
+    "category": "Venue & Getting There",
+    "title": "Wedding Location",
+    "city": "Bangkok, Thailand",
+    "openMaps": "Open in Google Maps ↗"
+  },
+  "about": {
+    "subtitle": "Meet the Bride & Groom",
+    "title": "About Parima & Jinkawin",
+    "welcome": "Welcome! Whether you are here from the Groom’s or Bride’s family & friends, here is a little glimpse into who we are and our journey together.",
+    "tabs": {
+      "all": "Overview",
+      "bride": "Meet Parima (Bride)",
+      "groom": "Meet Jinkawin (Groom)",
+      "story": "Our Story & Q&A"
+    },
+    "bride": {
+      "role": "The Bride",
+      "name": "Parima S. (Pang)",
+      "traits": "Warm-hearted • Creative • Coffee Enthusiast",
+      "parentsTitle": "Parents & Family",
+      "parentsText": "Daughter of Somchai & Wanida S., raised in Bangkok with a love for arts and family gatherings.",
+      "hobbiesTitle": "Hobbies & Passions",
+      "hobbiesText": "Baking sourdough, botanical watercolor painting, and discovering hidden café gems across Thailand.",
+      "quoteTitle": "How Jinkawin Describes Her",
+      "quoteText": "“Parima brings warmth and laughter to every room she enters. Her kindness and endless thoughtfulness make me want to be a better person every day.”"
+    },
+    "groom": {
+      "role": "The Groom",
+      "name": "Jinkawin P. (Win)",
+      "traits": "Thoughtful • Tech Enthusiast • Photographer",
+      "parentsTitle": "Parents & Family",
+      "parentsText": "Son of Prasert & Chintana P., known for his helpful nature and love for technology.",
+      "hobbiesTitle": "Hobbies & Passions",
+      "hobbiesText": "Landscape photography, mechanical keyboards, hiking mountain trails, and brewing espresso.",
+      "quoteTitle": "How Parima Describes Him",
+      "quoteText": "“Jinkawin is my steady anchor. He is patient, incredibly funny when you get to know him, and always knows how to brighten my day.”"
+    },
+    "story": {
+      "category": "Our Journey",
+      "title": "How We Met & Fun Q&A",
+      "firstMetTitle": "First Met",
+      "firstMetText": "At a cozy café in Ari, Bangkok in 2021 over cold brew coffee.",
+      "proposalTitle": "The Proposal",
+      "proposalText": "During a sunset walk along the Chiang Mai mountain view in late 2024.",
+      "sharedDreamTitle": "Shared Dream",
+      "sharedDreamText": "Building a home filled with art, travel memories, and family warmth.",
+      "triviaTitle": "Fun Facts for Friends & Relatives",
+      "q1": "Q: Who made the first move?",
+      "a1": "Jinkawin! He asked Parima if she wanted to explore a photography exhibition together.",
+      "q2": "Q: Who is the better cook?",
+      "a2": "Parima masters all desserts & pastries, while Jinkawin handles savory weekend pastas!",
+      "q3": "Q: Favorite trip together?",
+      "a3": "Exploring the historic streets of Kyoto during autumn foliage season.",
+      "q4": "Q: Favorite shared ritual?",
+      "a4": "Making hand-poured pour-over coffee together every Sunday morning."
+    },
+    "backToOverview": "← Back to Overview"
+  },
+  "register": {
+    "category": "RSVP & Guest Registration",
+    "title": "Celebrate With Us",
+    "subtitle": "We look forward to sharing this magical day with you. Please confirm your details below.",
+    "thankYou": "Thank You, {{name}}!",
+    "submittedMessage": "Your response preview has been recorded locally (Submission bypassed as requested).",
+    "editResponse": "Edit Response",
+    "nameLabel": "Name",
+    "namePlaceholder": "e.g. John Doe",
+    "nicknameLabel": "Nickname",
+    "nicknamePlaceholder": "e.g. Johnny",
+    "followersLabel": "Number of Followers",
+    "attendanceLabel": "Attendance",
+    "acceptOption": "Joyfully Accepts",
+    "declineOption": "Regretfully Declines",
+    "submitButton": "Submit Response (Preview)"
+  }
+}

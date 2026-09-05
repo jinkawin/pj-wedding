@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { weddingConfig } from '@/configs/app'
+import { useTranslation } from '@/locale/I18nContext'
 
 type TimeLeft = {
   days: number
@@ -47,6 +48,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 }
 
 export default function Countdown() {
+  const { t } = useTranslation()
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [isMounted, setIsMounted] = useState(false)
 
@@ -65,14 +67,14 @@ export default function Countdown() {
   if (!isMounted) return null
 
   return (
-    <div className="flex gap-2 sm:gap-3 justify-center items-end" aria-live="polite" aria-label="Countdown to wedding">
-      <CountdownUnit value={timeLeft.days} label="Days" />
+    <div className="flex gap-2 sm:gap-3 justify-center items-end" aria-live="polite" aria-label={t('countdown.ariaLabel')}>
+      <CountdownUnit value={timeLeft.days} label={t('countdown.days')} />
       <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.hours} label="Hours" />
+      <CountdownUnit value={timeLeft.hours} label={t('countdown.hours')} />
       <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.minutes} label="Min" />
+      <CountdownUnit value={timeLeft.minutes} label={t('countdown.minutes')} />
       <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.seconds} label="Sec" />
+      <CountdownUnit value={timeLeft.seconds} label={t('countdown.seconds')} />
     </div>
   )
 }

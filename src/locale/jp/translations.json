@@ -1,0 +1,111 @@
+{
+    "common": {
+        "language": "言語",
+        "english": "English",
+        "thai": "ไทย",
+        "chinese": "中文",
+        "japanese": "日本語"
+    },
+    "nav": {
+        "overview": "概要",
+        "location": "会場アクセス",
+        "about": "新郎新婦紹介",
+        "register": "ご出席登録"
+    },
+    "invitation": {
+        "together": "結婚披露宴のご案内",
+        "formalAttire": "ドレスコード：フォーマル / 正装",
+        "enterWebsite": "ウェブサイトを見る",
+        "lookForward": "皆様とお祝いできることを心より楽しみにしております"
+    },
+    "countdown": {
+        "title": "結婚式までのカウントダウン",
+        "ariaLabel": "結婚式までの残り時間",
+        "days": "日",
+        "hours": "時間",
+        "minutes": "分",
+        "seconds": "秒"
+    },
+    "overview": {
+        "subtitle": "結婚式概要",
+        "title": "Parima & Jinkawin",
+        "description": "私たちの結婚式概要ページへようこそ。スケジュール、会場アクセス、出席登録の詳細は下記よりご確認ください。",
+        "backToInvitation": "← 招待状に戻る"
+    },
+    "location": {
+        "category": "会場＆アクセス",
+        "title": "結婚式場のご案内",
+        "city": "タイ・バンコク",
+        "openMaps": "Google Mapで開く ↗"
+    },
+    "about": {
+        "subtitle": "新郎新婦の紹介",
+        "title": "Parima & Jinkawin について",
+        "welcome": "ようこそ！新郎・新娘のご家族・ご友人へ、二人の人柄とこれまでの歩みをご紹介します。",
+        "tabs": {
+            "all": "概要",
+            "bride": "新婦のご紹介 (Parima)",
+            "groom": "新郎のご紹介 (Jinkawin)",
+            "story": "二人のストーリー & Q&A"
+        },
+        "bride": {
+            "role": "新婦",
+            "name": "Parima S. (Priw)",
+            "traits": "温かい人柄 • クリエイティブ • コーヒー好き",
+            "parentsTitle": "ご家族・ご両親",
+            "parentsText": "Somchai・Wanida S. 夫妻の長女。バンコクで育ち、アートと家族の集まりを愛する。",
+            "hobbiesTitle": "趣味・好きなこと",
+            "hobbiesText": "サワードゥブレッド焼き、ボタニカル水彩画、タイ各地の素敵なカフェ巡り。",
+            "quoteTitle": "新郎からのメッセージ",
+            "quoteText": "「Parimaは周囲をいつも温かさと笑顔で満たしてくれます。彼女の優しさと心遣いに触れ、毎日自分を磨こうと思えます。」"
+        },
+        "groom": {
+            "role": "新郎",
+            "name": "Jinkawin P. (Win)",
+            "traits": "穏やかで細やか • テック好き • 写真家",
+            "parentsTitle": "ご家族・ご両親",
+            "parentsText": "Prasert・Chintana P. 夫妻の長男。面倒見が良く、テクノロジーに造詣が深い。",
+            "hobbiesTitle": "趣味・好きなこと",
+            "hobbiesText": "風景写真、カスタムメカニカルキーボード、山登り、エスプレッソ抽出。",
+            "quoteTitle": "新婦からのメッセージ",
+            "quoteText": "「Jinkawinは私の心を落ち着かせてくれる大切な存在です。落ち着いていてユーモアがあり、いつも私を笑顔にしてくれます。」"
+        },
+        "story": {
+            "category": "二人の歩み",
+            "title": "馴れ初め & 楽しいQ&A",
+            "firstMetTitle": "出会い",
+            "firstMetText": "2021年、バンコク・アーリー地区のカフェで水出しコーヒーを通じて出会いました。",
+            "proposalTitle": "プロポーズ",
+            "proposalText": "2024年暮れ、チェンマイの山々で夕日を眺めながら。",
+            "sharedDreamTitle": "二人の夢",
+            "sharedDreamText": "アートと旅の思い出、温かい家族愛に満ちた家庭を築くこと。",
+            "triviaTitle": "ご列席の皆様へのQ&A",
+            "q1": "Q: アプローチはどちらから？",
+            "a1": "Jinkawinから！写真展へ一緒に行こうとParimaを誘ったのが始まりです。",
+            "q2": "Q: 料理上手なのはどっち？",
+            "a2": "Parimaはお菓子・スイーツ作りが得意で、Jinkawinは休日の絶品パスタを担当しています！",
+            "q3": "Q: 一番思い出深かった旅行は？",
+            "a3": "紅葉シーズンの京都の歴史ある街並みを散策したことです。",
+            "q4": "Q: 毎日の楽しみは？",
+            "a4": "毎週日曜日の朝、一緒にハンドドリップコーヒーを淹れることです。"
+        },
+        "backToOverview": "← 概要に戻る"
+    },
+    "register": {
+        "category": "RSVP & ご出席確認",
+        "title": "ご出席の登録",
+        "subtitle": "特別な一日を皆様と共に過ごせることを楽しみにしております。下記より詳細をご登録ください。",
+        "thankYou": "{{name}} 様、ご回答ありがとうございます！",
+        "submittedMessage": "ローカル環境にてご回答のプレビューが記録されました。",
+        "editResponse": "回答を修正する",
+        "nameLabel": "お名前",
+        "namePlaceholder": "例：山田 太郎",
+        "nicknameLabel": "ニックネーム",
+        "nicknamePlaceholder": "例：タロウ",
+        "followersLabel": "ご同伴者人数",
+        "attendanceLabel": "ご出席可否",
+        "acceptOption": "喜んで出席いたします",
+        "declineOption": "あいにく欠席いたします",
+        "submitButton": "回答を送信する（プレビュー）"
+    }
+}

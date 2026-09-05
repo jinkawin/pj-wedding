@@ -4,10 +4,12 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CornerFloralDecoration, FloatingPetals } from '@/components/FloralDecorations'
+import { useTranslation } from '@/locale/I18nContext'
 
 type TabType = 'all' | 'groom' | 'bride' | 'story'
 
 export default function AboutUsPage() {
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<TabType>('all')
 
   return (
@@ -23,24 +25,24 @@ export default function AboutUsPage() {
         {/* Header Title */}
         <div className="text-center space-y-3">
           <p className="font-cormorant italic tracking-[0.25em] uppercase text-[#A89070] text-xs sm:text-sm">
-            Meet the Bride &amp; Groom
+            {t('about.subtitle')}
           </p>
           <h1 className="font-vibes text-5xl sm:text-6xl text-[#3B2A22]">
-            About Parima &amp; Jinkawin
+            {t('about.title')}
           </h1>
           <div className="w-16 h-[1px] bg-[#E0D8C8] mx-auto" />
           <p className="font-cormorant text-base sm:text-lg text-[#5C4033] max-w-lg mx-auto leading-relaxed">
-            Welcome! Whether you are here from the Groom’s or Bride’s family &amp; friends, here is a little glimpse into who we are and our journey together.
+            {t('about.welcome')}
           </p>
         </div>
 
         {/* Filter Navigation Tabs */}
-        <div className="flex justify-center gap-2 sm:gap-4 border-b border-[#E0D8C8] pb-3">
+        <div className="flex justify-center gap-2 sm:gap-4 border-b border-[#E0D8C8] pb-3 flex-wrap">
           {[
-            { id: 'all', label: 'Overview' },
-            { id: 'bride', label: 'Meet Parima (Bride)' },
-            { id: 'groom', label: 'Meet Jinkawin (Groom)' },
-            { id: 'story', label: 'Our Story & Q&A' },
+            { id: 'all', label: t('about.tabs.all') },
+            { id: 'bride', label: t('about.tabs.bride') },
+            { id: 'groom', label: t('about.tabs.groom') },
+            { id: 'story', label: t('about.tabs.story') },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -76,13 +78,13 @@ export default function AboutUsPage() {
 
                   <div className="text-center space-y-1">
                     <span className="font-cormorant italic text-[#C4714A] text-sm uppercase tracking-widest">
-                      The Bride
+                      {t('about.bride.role')}
                     </span>
                     <h2 className="font-vibes text-3xl sm:text-4xl text-[#3B2A22]">
-                      Parima S. (Pang)
+                      {t('about.bride.name')}
                     </h2>
                     <p className="font-lato text-xs text-[#A89070] uppercase tracking-wider">
-                      Warm-hearted • Creative • Coffee Enthusiast
+                      {t('about.bride.traits')}
                     </p>
                   </div>
 
@@ -92,24 +94,24 @@ export default function AboutUsPage() {
                   <div className="space-y-4 font-cormorant text-base text-[#5C4033] leading-relaxed">
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        Parents &amp; Family
+                        {t('about.bride.parentsTitle')}
                       </h3>
-                      <p>Daughter of Somchai &amp; Wanida S., raised in Bangkok with a love for arts and family gatherings.</p>
+                      <p>{t('about.bride.parentsText')}</p>
                     </div>
 
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        Hobbies &amp; Passions
+                        {t('about.bride.hobbiesTitle')}
                       </h3>
-                      <p>Baking sourdough, botanical watercolor painting, and discovering hidden café gems across Thailand.</p>
+                      <p>{t('about.bride.hobbiesText')}</p>
                     </div>
 
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        How Jinkawin Describes Her
+                        {t('about.bride.quoteTitle')}
                       </h3>
                       <p className="italic bg-[#F5EDD6]/60 p-3 rounded-sm border-l-2 border-[#C4714A]">
-                        &ldquo;Parima brings warmth and laughter to every room she enters. Her kindness and endless thoughtfulness make me want to be a better person every day.&rdquo;
+                        {t('about.bride.quoteText')}
                       </p>
                     </div>
                   </div>
@@ -134,13 +136,13 @@ export default function AboutUsPage() {
 
                   <div className="text-center space-y-1">
                     <span className="font-cormorant italic text-[#C4714A] text-sm uppercase tracking-widest">
-                      The Groom
+                      {t('about.groom.role')}
                     </span>
                     <h2 className="font-vibes text-3xl sm:text-4xl text-[#3B2A22]">
-                      Jinkawin P. (Win)
+                      {t('about.groom.name')}
                     </h2>
                     <p className="font-lato text-xs text-[#A89070] uppercase tracking-wider">
-                      Thoughtful • Tech Enthusiast • Photographer
+                      {t('about.groom.traits')}
                     </p>
                   </div>
 
@@ -150,24 +152,24 @@ export default function AboutUsPage() {
                   <div className="space-y-4 font-cormorant text-base text-[#5C4033] leading-relaxed">
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        Parents &amp; Family
+                        {t('about.groom.parentsTitle')}
                       </h3>
-                      <p>Son of Prasert &amp; Chintana P., known for his helpful nature and love for technology.</p>
+                      <p>{t('about.groom.parentsText')}</p>
                     </div>
 
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        Hobbies &amp; Passions
+                        {t('about.groom.hobbiesTitle')}
                       </h3>
-                      <p>Landscape photography, mechanical keyboards, hiking mountain trails, and brewing espresso.</p>
+                      <p>{t('about.groom.hobbiesText')}</p>
                     </div>
 
                     <div>
                       <h3 className="font-semibold text-[#C4714A] text-sm uppercase tracking-wider mb-1">
-                        How Parima Describes Him
+                        {t('about.groom.quoteTitle')}
                       </h3>
                       <p className="italic bg-[#F5EDD6]/60 p-3 rounded-sm border-l-2 border-[#C4714A]">
-                        &ldquo;Jinkawin is my steady anchor. He is patient, incredibly funny when you get to know him, and always knows how to brighten my day.&rdquo;
+                        {t('about.groom.quoteText')}
                       </p>
                     </div>
                   </div>
@@ -182,10 +184,10 @@ export default function AboutUsPage() {
           <div className="bg-[#FAF4EB] border border-[#E8DFC8] rounded-md p-6 sm:p-10 space-y-8 shadow-sm">
             <div className="text-center space-y-2">
               <span className="font-cormorant italic text-[#C4714A] text-sm uppercase tracking-widest">
-                Our Journey
+                {t('about.story.category')}
               </span>
               <h2 className="font-vibes text-4xl text-[#3B2A22]">
-                How We Met &amp; Fun Q&amp;A
+                {t('about.story.title')}
               </h2>
               <div className="w-12 h-[1px] bg-[#E0D8C8] mx-auto" />
             </div>
@@ -193,48 +195,48 @@ export default function AboutUsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center font-cormorant">
               <div className="bg-[#FAF7F1] p-5 rounded border border-[#E8DFC8]/60 space-y-2">
                 <span className="text-2xl">☕</span>
-                <h3 className="font-semibold text-[#3B2A22] text-lg">First Met</h3>
-                <p className="text-sm text-[#5C4033]">At a cozy café in Ari, Bangkok in 2021 over cold brew coffee.</p>
+                <h3 className="font-semibold text-[#3B2A22] text-lg">{t('about.story.firstMetTitle')}</h3>
+                <p className="text-sm text-[#5C4033]">{t('about.story.firstMetText')}</p>
               </div>
 
               <div className="bg-[#FAF7F1] p-5 rounded border border-[#E8DFC8]/60 space-y-2">
                 <span className="text-2xl">💍</span>
-                <h3 className="font-semibold text-[#3B2A22] text-lg">The Proposal</h3>
-                <p className="text-sm text-[#5C4033]">During a sunset walk along the Chiang Mai mountain view in late 2024.</p>
+                <h3 className="font-semibold text-[#3B2A22] text-lg">{t('about.story.proposalTitle')}</h3>
+                <p className="text-sm text-[#5C4033]">{t('about.story.proposalText')}</p>
               </div>
 
               <div className="bg-[#FAF7F1] p-5 rounded border border-[#E8DFC8]/60 space-y-2">
                 <span className="text-2xl">🏡</span>
-                <h3 className="font-semibold text-[#3B2A22] text-lg">Shared Dream</h3>
-                <p className="text-sm text-[#5C4033]">Building a home filled with art, travel memories, and family warmth.</p>
+                <h3 className="font-semibold text-[#3B2A22] text-lg">{t('about.story.sharedDreamTitle')}</h3>
+                <p className="text-sm text-[#5C4033]">{t('about.story.sharedDreamText')}</p>
               </div>
             </div>
 
             {/* Quick Q&A Accordion/List */}
             <div className="space-y-4 pt-4 border-t border-[#E0D8C8]">
               <h3 className="font-cormorant font-semibold text-center text-[#C4714A] uppercase tracking-wider text-sm">
-                Fun Facts for Friends &amp; Relatives
+                {t('about.story.triviaTitle')}
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-cormorant text-sm">
                 <div className="bg-[#FAF7F1] p-4 rounded border border-[#E8DFC8]/80">
-                  <p className="font-semibold text-[#3B2A22]">Q: Who made the first move?</p>
-                  <p className="text-[#5C4033] mt-1">Jinkawin! He asked Parima if she wanted to explore a photography exhibition together.</p>
+                  <p className="font-semibold text-[#3B2A22]">{t('about.story.q1')}</p>
+                  <p className="text-[#5C4033] mt-1">{t('about.story.a1')}</p>
                 </div>
 
                 <div className="bg-[#FAF7F1] p-4 rounded border border-[#E8DFC8]/80">
-                  <p className="font-semibold text-[#3B2A22]">Q: Who is the better cook?</p>
-                  <p className="text-[#5C4033] mt-1">Parima masters all desserts &amp; pastries, while Jinkawin handles savory weekend pastas!</p>
+                  <p className="font-semibold text-[#3B2A22]">{t('about.story.q2')}</p>
+                  <p className="text-[#5C4033] mt-1">{t('about.story.a2')}</p>
                 </div>
 
                 <div className="bg-[#FAF7F1] p-4 rounded border border-[#E8DFC8]/80">
-                  <p className="font-semibold text-[#3B2A22]">Q: Favorite trip together?</p>
-                  <p className="text-[#5C4033] mt-1">Exploring the historic streets of Kyoto during autumn foliage season.</p>
+                  <p className="font-semibold text-[#3B2A22]">{t('about.story.q3')}</p>
+                  <p className="text-[#5C4033] mt-1">{t('about.story.a3')}</p>
                 </div>
 
                 <div className="bg-[#FAF7F1] p-4 rounded border border-[#E8DFC8]/80">
-                  <p className="font-semibold text-[#3B2A22]">Q: Favorite shared ritual?</p>
-                  <p className="text-[#5C4033] mt-1">Making hand-poured pour-over coffee together every Sunday morning.</p>
+                  <p className="font-semibold text-[#3B2A22]">{t('about.story.q4')}</p>
+                  <p className="text-[#5C4033] mt-1">{t('about.story.a4')}</p>
                 </div>
               </div>
             </div>
@@ -247,7 +249,7 @@ export default function AboutUsPage() {
             href="/overview"
             className="inline-block font-lato uppercase text-xs tracking-[0.18em] px-6 py-3 rounded bg-[#C4714A] text-[#FAF4EB] hover:bg-[#A85E38] transition-colors shadow-sm"
           >
-            ← Back to Overview
+            {t('about.backToOverview')}
           </Link>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/navigation/Navbar'
+import { I18nProvider } from '@/locale/I18nContext'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,10 +16,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <I18nProvider>
+          <Navbar />
+          {children}
+        </I18nProvider>
       </body>
     </html>
   )
 }
+
 

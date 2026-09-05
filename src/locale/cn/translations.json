@@ -1,0 +1,110 @@
+{
+    "common": {
+        "language": "语言",
+        "english": "English",
+        "thai": "ไทย",
+        "chinese": "中文"
+    },
+    "nav": {
+        "overview": "婚礼概览",
+        "location": "婚礼地点",
+        "about": "关于我们",
+        "register": "出席回复"
+    },
+    "invitation": {
+        "together": "诚挚邀请您参加我们的婚礼",
+        "formalAttire": "着装要求：正装 / 正式礼服",
+        "enterWebsite": "进入婚礼网站",
+        "lookForward": "期待与您共同庆祝这一美好时刻"
+    },
+    "countdown": {
+        "title": "倒计时迎接收获幸福的时刻",
+        "ariaLabel": "婚礼倒计时",
+        "days": "天",
+        "hours": "小时",
+        "minutes": "分钟",
+        "seconds": "秒"
+    },
+    "overview": {
+        "subtitle": "婚礼概览",
+        "title": "Parima & Jinkawin",
+        "description": "欢迎来到我们的婚礼概览页面。在这里您可以了解婚礼日程、地点以及出席登记等详细信息。",
+        "backToInvitation": "← 返回请柬"
+    },
+    "location": {
+        "category": "婚礼地点与交通",
+        "title": "婚礼举办地点",
+        "city": "泰国曼谷",
+        "openMaps": "在谷歌地图中打开 ↗"
+    },
+    "about": {
+        "subtitle": "认识新人",
+        "title": "关于 Parima & Jinkawin",
+        "welcome": "欢迎！无论您是新郎还是新娘的亲朋好友，这里是关于我们和我们共同旅程的简短介绍。",
+        "tabs": {
+            "all": "概览",
+            "bride": "认识新娘 (Parima)",
+            "groom": "认识新郎 (Jinkawin)",
+            "story": "我们的故事 & 问答"
+        },
+        "bride": {
+            "role": "新娘",
+            "name": "Parima S. (Priw)",
+            "traits": "热心 • 富有创意 • 咖啡爱好者",
+            "parentsTitle": "家庭与父母",
+            "parentsText": "Somchai 与 Wanida S. 之女，在曼谷长大，热爱艺术与家庭聚会。",
+            "hobbiesTitle": "兴趣与爱好",
+            "hobbiesText": "烘焙酸种面包、植物水彩画，以及探索泰国各地的宝藏咖啡馆。",
+            "quoteTitle": "新郎眼中的她",
+            "quoteText": "“Parima 为她走进的每一个房间带来温暖与欢笑。她的善良与贴心让我每天都想成为更好的人。”"
+        },
+        "groom": {
+            "role": "新郎",
+            "name": "Jinkawin P. (Win)",
+            "traits": "沉稳细心 • 科技爱好者 • 摄影师",
+            "parentsTitle": "家庭与父母",
+            "parentsText": "Prasert 与 Chintana P. 之子，热心助人，热爱科技。",
+            "hobbiesTitle": "兴趣与爱好",
+            "hobbiesText": "风光摄影、客制化机械键盘、户外登山，以及手冲咖啡。",
+            "quoteTitle": "新娘眼中的他",
+            "quoteText": "“Jinkawin 是我坚实的依靠。他很有耐心，了解后会发现他非常幽默，总是知道如何让我的心情变得明朗。”"
+        },
+        "story": {
+            "category": "爱情之旅",
+            "title": "相识故事 & 趣味问答",
+            "firstMetTitle": "初次相遇",
+            "firstMetText": "2021年在曼谷阿里区一家温馨的咖啡馆，因冷萃咖啡而结缘。",
+            "proposalTitle": "求婚时刻",
+            "proposalText": "2024年底在清迈山间漫步赏落日时。",
+            "sharedDreamTitle": "共同梦想",
+            "sharedDreamText": "建设一个充满艺术、旅行回忆与家庭温暖的家。",
+            "triviaTitle": "亲友趣味问答",
+            "q1": "问：谁先主动的？",
+            "a1": "Jinkawin！他第一次主动邀请 Parima 一起去看摄影展。",
+            "q2": "问：谁厨艺更好？",
+            "a2": "Parima 精通各种甜点与烘焙，而 Jinkawin 则负责周末美味的意面！",
+            "q3": "问：最喜欢的共同旅行？",
+            "a3": "秋季赏枫时节探索京都的历史街区。",
+            "q4": "问：最喜欢的日常仪式？",
+            "a4": "每个周日早晨一起手冲咖啡。"
+        },
+        "backToOverview": "← 返回概览"
+    },
+    "register": {
+        "category": "RSVP & 嘉宾登记",
+        "title": "与我们共同庆祝",
+        "subtitle": "我们期待与您共享这一美好时光。请在下方确认您的出席信息。",
+        "thankYou": "谢谢您，{{name}}！",
+        "submittedMessage": "您的回复已在本地记录（已跳过提交操作）。",
+        "editResponse": "修改回复",
+        "nameLabel": "姓名",
+        "namePlaceholder": "例如：张三",
+        "nicknameLabel": "昵称",
+        "nicknamePlaceholder": "例如：小张",
+        "followersLabel": "随行人数",
+        "attendanceLabel": "出席情况",
+        "acceptOption": "欣然出席",
+        "declineOption": "遗憾无法出席",
+        "submitButton": "提交回复（预览）"
+    }
+}
