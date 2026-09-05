@@ -10,6 +10,7 @@ export default function RegisterPage() {
     name: '',
     nickname: '',
     followersCount: 1,
+    party: 'groom' as 'groom' | 'bride',
     attendance: 'attending' as 'attending' | 'declined' | '',
   })
 
@@ -31,7 +32,7 @@ export default function RegisterPage() {
       <FloatingPetals count={3} />
 
       <div className="w-full max-w-xl bg-white/70 backdrop-blur-md border border-[#E0D8C8] rounded-3xl p-6 sm:p-10 shadow-sm transition-all duration-300 z-20 relative">
-        
+
         {/* Header */}
         <div className="text-center space-y-2 mb-8">
           <span className="text-xs uppercase tracking-[0.25em] font-lato text-[#C4714A] font-medium">
@@ -106,6 +107,36 @@ export default function RegisterPage() {
               </div>
             </div>
 
+            {/* Groom Mate or Bride Mate Selection */}
+            <div className="space-y-2">
+              <label className="block font-lato text-xs font-semibold text-[#5C4033] uppercase tracking-wider">
+                {t('register.partyLabel')} <span className="text-[#C4714A]">*</span>
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, party: 'groom' })}
+                  className={`py-3 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${formData.party === 'groom'
+                      ? 'border-[#C4714A] bg-[#C4714A]/10 text-[#C4714A] font-semibold shadow-sm ring-1 ring-[#C4714A]'
+                      : 'border-[#E0D8C8] bg-white/80 text-[#5C4033]/80 hover:bg-white'
+                    }`}
+                >
+                  <span className="font-lato text-xs sm:text-sm">{t('register.groomPartyOption')}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, party: 'bride' })}
+                  className={`py-3 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${formData.party === 'bride'
+                      ? 'border-[#C4714A] bg-[#C4714A]/10 text-[#C4714A] font-semibold shadow-sm ring-1 ring-[#C4714A]'
+                      : 'border-[#E0D8C8] bg-white/80 text-[#5C4033]/80 hover:bg-white'
+                    }`}
+                >
+                  <span className="font-lato text-xs sm:text-sm">{t('register.bridePartyOption')}</span>
+                </button>
+              </div>
+            </div>
+
             {/* Number of Followers */}
             <div className="space-y-1.5">
               <label
@@ -140,11 +171,10 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, attendance: 'attending' })}
-                  className={`py-3.5 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
-                    formData.attendance === 'attending'
+                  className={`py-3.5 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${formData.attendance === 'attending'
                       ? 'border-[#C4714A] bg-[#C4714A]/10 text-[#C4714A] font-semibold shadow-sm ring-1 ring-[#C4714A]'
                       : 'border-[#E0D8C8] bg-white/80 text-[#5C4033]/80 hover:bg-white'
-                  }`}
+                    }`}
                 >
                   <span>🎉</span>
                   <span className="font-lato text-xs sm:text-sm">{t('register.acceptOption')}</span>
@@ -153,11 +183,10 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, attendance: 'declined' })}
-                  className={`py-3.5 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${
-                    formData.attendance === 'declined'
+                  className={`py-3.5 px-4 rounded-xl border text-center transition-all flex items-center justify-center gap-2 ${formData.attendance === 'declined'
                       ? 'border-[#5C4033] bg-[#5C4033]/10 text-[#3B2A22] font-semibold shadow-sm ring-1 ring-[#5C4033]'
                       : 'border-[#E0D8C8] bg-white/80 text-[#5C4033]/80 hover:bg-white'
-                  }`}
+                    }`}
                 >
                   <span>✉️</span>
                   <span className="font-lato text-xs sm:text-sm">{t('register.declineOption')}</span>

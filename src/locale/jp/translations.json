@@ -8,6 +8,9 @@
     },
     "nav": {
         "overview": "概要",
+        "agenda": "タイムテーブル",
+        "seating": "座席表",
+        "gallery": "ギャラリー",
         "location": "会場アクセス",
         "about": "新郎新婦紹介",
         "register": "ご出席登録"
@@ -24,7 +27,10 @@
         "days": "日",
         "hours": "時間",
         "minutes": "分",
-        "seconds": "秒"
+        "seconds": "秒",
+        "addToCalendar": "カレンダーに追加",
+        "googleCalendar": "Google Calendar",
+        "appleCalendar": "iCal / Apple Calendar"
     },
     "overview": {
         "subtitle": "結婚式概要",
@@ -104,9 +110,58 @@
         "nicknameLabel": "ニックネーム",
         "nicknamePlaceholder": "例：タロウ",
         "followersLabel": "ご同伴者人数",
+        "partyLabel": "ゲストの区分",
+        "groomPartyOption": "新郎側ゲスト / Groom Mate",
+        "bridePartyOption": "新婦側ゲスト / Bride Mate",
         "attendanceLabel": "ご出席可否",
         "acceptOption": "喜んで出席いたします",
         "declineOption": "あいにく欠席いたします",
         "submitButton": "回答を送信する（プレビュー）"
+    },
+    "seating": {
+        "subtitle": "インタラクティブ座席マップ",
+        "title": "ご着席テーブル案内",
+        "description": "グランドボールルーム内のお席をご案内いたします。お名前やテーブル番号で検索いただけます。",
+        "searchPlaceholder": "お名前またはテーブル番号で検索（例：Win、Priw、Table 4）...",
+        "clearSearch": "検索をクリア",
+        "resultsCount": "{{count}} 件の該当者が見つかりました",
+        "noResults": "該当するゲストが見つかりませんでした。綴りをご確認いただくか、受付スタッフまでお声がけください。",
+        "stage": "メインステージ & フラワーアーチ",
+        "entrance": "ボールルーム メインエントランス",
+        "walkway": "新郎新婦入場ロード",
+        "viewMap": "座席表マップ",
+        "viewList": "ゲスト一覧リスト",
+        "tableGuests": "このテーブルのゲスト一覧",
+        "seatLabel": "座席 {{number}}",
+        "capacity": "着席 {{current}}/{{max}} 名",
+        "yourSeat": "お客様のお席",
+        "allCategories": "すべてのテーブル",
+        "closeDetails": "詳細を閉じる"
+    },
+    "agenda": {
+        "subtitle": "当日の進行スケジュール",
+        "title": "ウェディング・アジェンダ",
+        "description": "皆様と心温まる一日を過ごせるよう、当日の儀式および披露宴のスケジュールをご案内いたします。",
+        "allTab": "すべてのプログラム",
+        "morningTab": "午前の儀式 (08:30 - 12:30)",
+        "eveningTab": "夜の披露宴・パーティー (17:30 - 23:30)",
+        "morningNote": "午前の部はタイの伝統的な結納行列および聖水祈福の儀式が行われます。",
+        "eveningNote": "夜の部はウェルカムカクテル、着席ディナー、およびアフターパーティーとなります。",
+        "addToCalendar": "カレンダーに追加"
+    },
+    "gallery": {
+        "subtitle": "思い出のひとコマ",
+        "title": "フォトギャラリー",
+        "description": "日本やタイ各地を巡った旅の思い出から、前撮り写真までの記録をお届けします。",
+        "filter": {
+            "all": "すべての写真",
+            "prewedding": "前撮り写真",
+            "proposal": "プロポーズの瞬間",
+            "moments": "旅と日常"
+        },
+        "photoCount": "{{current}} / {{total}} 枚目",
+        "close": "プレビューを閉じる (Esc)",
+        "prev": "前の写真 (←)",
+        "next": "次の写真 (→)"
     }
 }

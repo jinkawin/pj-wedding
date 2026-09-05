@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import Countdown from '@/components/Countdown'
+import AddToCalendar from '@/components/AddToCalendar'
 import { CornerFloralDecoration, FloatingPetals } from '@/components/FloralDecorations'
 import { useTranslation } from '@/locale/I18nContext'
+import { weddingConfig } from '@/configs/app'
 
 export default function OverviewPage() {
   const { t } = useTranslation()
@@ -32,11 +34,11 @@ export default function OverviewPage() {
         </p>
 
         {/* Countdown Timer */}
-        <div className="pt-4 pb-2">
-          <p className="font-cormorant italic text-[#A89070] text-sm mb-4">
-            {t('countdown.title')}
-          </p>
+        <div className="pt-4 pb-2 flex flex-col items-center">
           <Countdown />
+          <div className="mt-5">
+            <AddToCalendar />
+          </div>
         </div>
 
         {/* Action Buttons */}

@@ -8,6 +8,9 @@ import { useTranslation } from '@/locale/I18nContext'
 
 const NAV_ITEMS = [
   { key: 'nav.overview', href: '/overview' },
+  { key: 'nav.agenda', href: '/agenda' },
+  { key: 'nav.seating', href: '/seating' },
+  { key: 'nav.gallery', href: '/gallery' },
   { key: 'nav.location', href: '/location' },
   { key: 'nav.about', href: '/about' },
   { key: 'nav.register', href: '/register' },
@@ -24,27 +27,28 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF7F1]/95 backdrop-blur-md border-b border-[#E0D8C8] px-4 sm:px-6 py-3.5">
-      <div className="max-w-4xl mx-auto flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#FAF7F1]/95 backdrop-blur-md border-b border-[#E0D8C8] px-4 sm:px-6 py-3">
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Brand Title */}
-        <Link href="/" className="font-vibes text-2xl sm:text-3xl text-[#3B2A22] hover:opacity-80 transition-opacity">
+        <Link href="/" className="font-vibes text-2xl sm:text-3xl text-[#3B2A22] hover:opacity-80 transition-opacity whitespace-nowrap">
           P &amp; J
         </Link>
 
         {/* Right Section: Language Switcher + Desktop Nav + Mobile Hamburger */}
-        <div className="flex items-center gap-3 sm:gap-6">
+        <div className="flex items-center gap-3 sm:gap-5">
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`font-lato text-xs uppercase tracking-[0.15em] transition-colors ${isActive
+                  className={`font-lato text-xs uppercase tracking-[0.14em] transition-colors whitespace-nowrap ${
+                    isActive
                       ? 'text-[#C4714A] font-semibold border-b border-[#C4714A] pb-0.5'
                       : 'text-[#5C4033]/70 hover:text-[#3B2A22]'
-                    }`}
+                  }`}
                 >
                   {t(item.key)}
                 </Link>
@@ -55,11 +59,11 @@ export default function Navbar() {
           {/* Language Switcher Dropdown */}
           <LanguageSwitcher />
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile / Tablet Hamburger Button */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-[#3B2A22] hover:bg-[#EAE2D2]/50 transition-colors focus:outline-none"
+            className="lg:hidden p-2 rounded-lg text-[#3B2A22] hover:bg-[#EAE2D2]/50 transition-colors focus:outline-none"
             aria-label="Toggle Navigation Menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -76,7 +80,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Dropdown Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden pt-3 pb-2 border-t border-[#E0D8C8] mt-3 space-y-1 animate-in slide-in-from-top-2 duration-200">
+        <div className="lg:hidden pt-3 pb-2 border-t border-[#E0D8C8] mt-3 space-y-1 animate-in slide-in-from-top-2 duration-200">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -84,10 +88,11 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-lato text-xs uppercase tracking-[0.15em] transition-colors ${isActive
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-lato text-xs uppercase tracking-[0.15em] transition-colors ${
+                  isActive
                     ? 'bg-[#C4714A]/10 text-[#C4714A] font-semibold'
                     : 'text-[#5C4033] hover:bg-[#FAF7F1]'
-                  }`}
+                }`}
               >
                 <span>{t(item.key)}</span>
               </Link>

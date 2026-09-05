@@ -67,14 +67,22 @@ export default function Countdown() {
   if (!isMounted) return null
 
   return (
-    <div className="flex gap-2 sm:gap-3 justify-center items-end" aria-live="polite" aria-label={t('countdown.ariaLabel')}>
-      <CountdownUnit value={timeLeft.days} label={t('countdown.days')} />
-      <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.hours} label={t('countdown.hours')} />
-      <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.minutes} label={t('countdown.minutes')} />
-      <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
-      <CountdownUnit value={timeLeft.seconds} label={t('countdown.seconds')} />
+    <div className="flex flex-col items-center">
+      <p className="font-cormorant font-semibold tracking-wide text-[#5C4033] text-lg sm:text-xl mb-1">
+        {weddingConfig.location.dateTimeText}
+      </p>
+      <p className="font-cormorant italic text-[#A89070] text-sm mb-3">
+        {t('countdown.title')}
+      </p>
+      <div className="flex gap-2 sm:gap-3 justify-center items-end" aria-live="polite" aria-label={t('countdown.ariaLabel')}>
+        <CountdownUnit value={timeLeft.days} label={t('countdown.days')} />
+        <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
+        <CountdownUnit value={timeLeft.hours} label={t('countdown.hours')} />
+        <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
+        <CountdownUnit value={timeLeft.minutes} label={t('countdown.minutes')} />
+        <span className="font-cormorant text-xl sm:text-2xl pb-4 text-[#C4714A] font-semibold">:</span>
+        <CountdownUnit value={timeLeft.seconds} label={t('countdown.seconds')} />
+      </div>
     </div>
   )
 }

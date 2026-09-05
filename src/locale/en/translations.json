@@ -6,6 +6,9 @@
   },
   "nav": {
     "overview": "Overview",
+    "agenda": "Agenda",
+    "seating": "Seat Map",
+    "gallery": "Gallery",
     "location": "Location",
     "about": "About Us",
     "register": "Register"
@@ -22,7 +25,10 @@
     "days": "Days",
     "hours": "Hours",
     "minutes": "Min",
-    "seconds": "Sec"
+    "seconds": "Sec",
+    "addToCalendar": "Add to Calendar",
+    "googleCalendar": "Google Calendar",
+    "appleCalendar": "iCal / Apple Calendar"
   },
   "overview": {
     "subtitle": "Wedding Overview",
@@ -49,7 +55,7 @@
     },
     "bride": {
       "role": "The Bride",
-      "name": "Parima S. (Pang)",
+      "name": "Parima S. (Priw)",
       "traits": "Warm-hearted • Creative • Coffee Enthusiast",
       "parentsTitle": "Parents & Family",
       "parentsText": "Daughter of Somchai & Wanida S., raised in Bangkok with a love for arts and family gatherings.",
@@ -102,9 +108,58 @@
     "nicknameLabel": "Nickname",
     "nicknamePlaceholder": "e.g. Johnny",
     "followersLabel": "Number of Followers",
+    "partyLabel": "Guest Side",
+    "groomPartyOption": "Groom's Guest",
+    "bridePartyOption": "Bride's Guest",
     "attendanceLabel": "Attendance",
     "acceptOption": "Joyfully Accepts",
     "declineOption": "Regretfully Declines",
     "submitButton": "Submit Response (Preview)"
+  },
+  "seating": {
+    "subtitle": "Interactive Floor Plan",
+    "title": "Guest Seating Chart",
+    "description": "Find your table and seat in The Grand Ballroom. Search by your name, nickname, or table number.",
+    "searchPlaceholder": "Search by guest name or table (e.g. Win, Priw, Table 4)...",
+    "clearSearch": "Clear search",
+    "resultsCount": "{{count}} matching result(s)",
+    "noResults": "No matching guests found. Please check spelling or consult our welcome reception desk.",
+    "stage": "Main Stage & Arch",
+    "entrance": "Grand Ballroom Entrance",
+    "walkway": "Bridal Walkway",
+    "viewMap": "Floor Plan",
+    "viewList": "Directory List",
+    "tableGuests": "Guests seated at this table",
+    "seatLabel": "Seat {{number}}",
+    "capacity": "Seats {{current}}/{{max}}",
+    "yourSeat": "Your Assigned Seat",
+    "allCategories": "All Tables",
+    "closeDetails": "Close details"
+  },
+  "agenda": {
+    "subtitle": "Order of Events",
+    "title": "Wedding Day Agenda",
+    "description": "We cordially invite you to celebrate each special milestone with us throughout the day.",
+    "allTab": "All Events",
+    "morningTab": "Morning Ceremony (08:30 - 12:30)",
+    "eveningTab": "Evening Reception (17:30 - 23:30)",
+    "morningNote": "Morning events are hosted in traditional Thai ceremonial setting.",
+    "eveningNote": "Evening celebration includes cocktails, seated banquet dinner, and afterparty.",
+    "addToCalendar": "Add to Calendar"
+  },
+  "gallery": {
+    "subtitle": "Memories & Milestones",
+    "title": "Our Photo Gallery",
+    "description": "Glimpses of our love story — from our travels across Japan and northern Thailand to our pre-wedding portraits.",
+    "filter": {
+      "all": "All Moments",
+      "prewedding": "Pre-Wedding",
+      "proposal": "The Proposal",
+      "moments": "Trips & Daily Life"
+    },
+    "photoCount": "{{current}} of {{total}}",
+    "close": "Close Preview (Esc)",
+    "prev": "Previous Photo (←)",
+    "next": "Next Photo (→)"
   }
 }
