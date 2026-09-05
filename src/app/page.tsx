@@ -1,5 +1,6 @@
-import EnvelopeScene from '@/components/landing/EnvelopeScene'
+import EnvelopeScene from '@/app/landing/components/EnvelopeScene'
 
 export default function Home() {
   return <EnvelopeScene />
 }
+

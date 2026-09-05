@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import InvitationCard from '@/components/landing/InvitationCard'
-import WaxSeal from '@/components/landing/WaxSeal'
+import { useRouter } from 'next/navigation'
+import InvitationCard from './InvitationCard'
+import WaxSeal from './WaxSeal'
 
 type SceneState = 'idle' | 'open'
 
@@ -10,6 +11,7 @@ type SceneState = 'idle' | 'open'
 const SCENE_BG = '#B87240'
 
 export default function EnvelopeScene() {
+  const router = useRouter()
   const [scene, setScene] = useState<SceneState>('idle')
 
   const handleOpen = useCallback(() => {
@@ -18,8 +20,8 @@ export default function EnvelopeScene() {
   }, [scene])
 
   const handleEnterWebsite = useCallback(() => {
-    setScene('open')
-  }, [])
+    router.push('/overview')
+  }, [router])
 
   const isOpen = scene === 'open'
 
