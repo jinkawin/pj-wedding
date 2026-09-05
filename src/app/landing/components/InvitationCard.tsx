@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { weddingConfig } from '@/configs/app'
 
 type TimeLeft = {
   days: number
@@ -9,12 +10,8 @@ type TimeLeft = {
   seconds: number
 }
 
-// ── Update this to the real wedding date ──────────────────────────────────────
-const WEDDING_DATE = new Date('2025-03-15T10:00:00+07:00')
-// ─────────────────────────────────────────────────────────────────────────────
-
-function calculateTimeLeft(): TimeLeft {
-  const diff = WEDDING_DATE.getTime() - Date.now()
+function calculateTimeLeft(targetDate: Date): TimeLeft {
+  const diff = targetDate.getTime() - Date.now()
   if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
 
   return {
@@ -55,11 +52,14 @@ type InvitationCardProps = {
 }
 
 export default function InvitationCard({ isVisible, onEnterWebsite }: InvitationCardProps) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft())
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
     if (!isVisible) return
-    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
+    const targetDate = new Date(weddingConfig.weddingDate)
+    setTimeLeft(calculateTimeLeft(targetDate))
+
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft(targetDate)), 1000)
 
     return () => clearInterval(timer)
   }, [isVisible])
@@ -148,13 +148,7 @@ export default function InvitationCard({ isVisible, onEnterWebsite }: Invitation
             className="font-cormorant font-semibold"
             style={{ color: '#5C4033', fontSize: '0.96rem' }}
           >
-            Saturday, 15 March 2025
-          </p>
-          <p
-            className="font-cormorant italic"
-            style={{ color: '#A89070', fontSize: '0.78rem', marginTop: '2px' }}
-          >
-            at Ten o&apos;clock in the morning
+            {weddingConfig.location.dateTimeText}
           </p>
         </div>
 
