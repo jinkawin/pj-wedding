@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Countdown from '@/components/Countdown'
 
 export default function OverviewPage() {
   return (
@@ -15,7 +16,15 @@ export default function OverviewPage() {
           Welcome to our wedding celebration overview. Here you will find all the details regarding our schedule, venue, and registry.
         </p>
 
-        <div className="pt-8">
+        {/* Countdown Timer */}
+        <div className="pt-4 pb-2">
+          <p className="font-cormorant italic text-[#A89070] text-sm mb-4">
+            Counting down to our big day
+          </p>
+          <Countdown />
+        </div>
+
+        <div className="pt-6">
           <Link
             href="/"
             className="inline-block font-lato uppercase text-xs tracking-[0.18em] px-6 py-3 rounded bg-[#C4714A] text-[#FAF4EB] hover:bg-[#A85E38] transition-colors"
