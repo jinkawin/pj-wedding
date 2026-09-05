@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useTranslation } from '@/locale/I18nContext'
+import { CornerFloralDecoration, FloatingPetals } from '@/components/FloralDecorations'
 
 export default function RegisterPage() {
   const { t } = useTranslation()
@@ -21,8 +22,15 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF7F1] text-[#3B2A22] px-4 sm:px-6 py-12 flex items-center justify-center">
-      <div className="w-full max-w-xl bg-white/70 backdrop-blur-md border border-[#E0D8C8] rounded-3xl p-6 sm:p-10 shadow-sm transition-all duration-300">
+    <main className="min-h-screen bg-[#FAF7F1] text-[#3B2A22] px-4 sm:px-6 py-12 flex items-center justify-center relative overflow-hidden">
+      {/* Minimal Decorative Florals */}
+      <CornerFloralDecoration position="top-left" className="absolute top-0 left-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="top-right" className="absolute top-0 right-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="bottom-left" className="absolute bottom-0 left-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="bottom-right" className="absolute bottom-0 right-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <FloatingPetals count={3} />
+
+      <div className="w-full max-w-xl bg-white/70 backdrop-blur-md border border-[#E0D8C8] rounded-3xl p-6 sm:p-10 shadow-sm transition-all duration-300 z-20 relative">
         
         {/* Header */}
         <div className="text-center space-y-2 mb-8">

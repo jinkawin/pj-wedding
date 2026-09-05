@@ -39,12 +39,13 @@ export default function OverviewPage() {
           <Countdown />
         </div>
 
-        <div className="pt-6">
+        {/* Action Buttons */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
-            href="/"
-            className="inline-block font-lato uppercase text-xs tracking-[0.18em] px-6 py-3 rounded bg-[#C4714A] text-[#FAF4EB] hover:bg-[#A85E38] transition-colors shadow-sm"
+            href="/register"
+            className="w-full sm:w-auto font-lato uppercase text-xs tracking-[0.18em] px-8 py-3.5 rounded bg-[#C4714A] text-[#FAF4EB] hover:bg-[#A85E38] transition-all shadow-md font-semibold hover:shadow-lg active:scale-98"
           >
-            {t('overview.backToInvitation')}
+            {t('overview.registerNow')}
           </Link>
         </div>
       </div>

@@ -28,8 +28,9 @@
     "overview": {
         "subtitle": "婚礼概览",
         "title": "Parima & Jinkawin",
-        "description": "欢迎来到我们的婚礼概览页面。在这里您可以了解婚礼日程、地点以及出席登记等详细信息。",
-        "backToInvitation": "← 返回请柬"
+        "description": "欢迎来到我们的婚礼概览。在这里您可以了解婚礼日程、地点及出席回复等详细信息。",
+        "backToInvitation": "← 返回请柬",
+        "registerNow": "出席回复 & 提交登记"
     },
     "location": {
         "category": "婚礼地点与交通",

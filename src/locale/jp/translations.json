@@ -29,8 +29,9 @@
     "overview": {
         "subtitle": "結婚式概要",
         "title": "Parima & Jinkawin",
-        "description": "私たちの結婚式概要ページへようこそ。スケジュール、会場アクセス、出席登録の詳細は下記よりご確認ください。",
-        "backToInvitation": "← 招待状に戻る"
+        "description": "私たちの結婚式概要へようこそ。スケジュール、会場、ご出席登録の詳細をご覧いただけます。",
+        "backToInvitation": "← 招待状に戻る",
+        "registerNow": "ご出席登録 (RSVP)"
     },
     "location": {
         "category": "会場＆アクセス",

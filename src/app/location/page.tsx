@@ -2,14 +2,22 @@
 
 import { weddingConfig } from '@/configs/app'
 import { useTranslation } from '@/locale/I18nContext'
+import { CornerFloralDecoration, FloatingPetals } from '@/components/FloralDecorations'
 
 export default function LocationPage() {
   const { t } = useTranslation()
   const { venueName, dateTimeText, mapsEmbedUrl, directMapsUrl } = weddingConfig.location
 
   return (
-    <main className="min-h-screen bg-[#FAF7F1] text-[#3B2A22] px-4 sm:px-6 py-10 flex flex-col items-center">
-      <div className="max-w-3xl w-full text-center space-y-4 mb-8">
+    <main className="min-h-screen bg-[#FAF7F1] text-[#3B2A22] px-4 sm:px-6 py-10 flex flex-col items-center relative overflow-hidden">
+      {/* Minimal Decorative Florals */}
+      <CornerFloralDecoration position="top-left" className="absolute top-0 left-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="top-right" className="absolute top-0 right-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="bottom-left" className="absolute bottom-0 left-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <CornerFloralDecoration position="bottom-right" className="absolute bottom-0 right-0 z-10 w-20 sm:w-24 md:w-28 opacity-40" />
+      <FloatingPetals count={3} />
+
+      <div className="max-w-3xl w-full text-center space-y-4 mb-8 z-20 relative">
         <p className="font-cormorant italic tracking-[0.25em] uppercase text-[#A89070] text-sm">
           {t('location.category')}
         </p>
