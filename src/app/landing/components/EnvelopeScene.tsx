@@ -7,7 +7,8 @@ import InvitationCard from './InvitationCard'
 type SceneState = 'idle' | 'open'
 
 // The warm kraft/terracotta that fills the screen background
-const SCENE_BG = '#B87240'
+const SCENE_BG = '#8c4716'
+const SCENE_PATTERN = '/O6DXQE0.jpg'
 
 export default function EnvelopeScene() {
   const router = useRouter()
@@ -29,6 +30,20 @@ export default function EnvelopeScene() {
       className="min-h-screen w-full overflow-hidden relative"
       style={{ backgroundColor: SCENE_BG }}
     >
+      {/* Pattern wash overlay for the terracotta backdrop */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `url(${SCENE_PATTERN})`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '280px 280px',
+          backgroundPosition: 'center',
+          opacity: 0.18,
+          mixBlendMode: 'screen',
+        }}
+      />
+
       {/* ── IDLE ── sealed envelope + couple names */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center gap-7 px-8"
