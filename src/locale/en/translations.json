@@ -148,9 +148,11 @@
     "addToCalendar": "Add to Calendar"
   },
   "gallery": {
-    "subtitle": "Memories & Milestones",
-    "title": "Our Photo Gallery",
-    "description": "Glimpses of our love story — from our travels across Japan and northern Thailand to our pre-wedding portraits.",
+    "subtitle": "Our Love Story • Since 2017",
+    "title": "A Decade in the Making",
+    "description": "Walk with us through our memories since 2017 — from our very first meeting in Bangkok, overseas adventures, the mountain proposal, to our wedding day.",
+    "allYears": "All Years",
+    "yearLabel": "Year {{year}}",
     "filter": {
       "all": "All Moments",
       "prewedding": "Pre-Wedding",

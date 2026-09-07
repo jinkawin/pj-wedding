@@ -149,9 +149,11 @@
         "addToCalendar": "添加到日历"
     },
     "gallery": {
-        "subtitle": "美好回忆 & 幸福瞬间",
-        "title": "甜蜜相册",
-        "description": "记录我们一路走来的美好印记——从旅途足迹到婚纱写真。",
+        "subtitle": "美好回忆 • 始于2017",
+        "title": "十年爱恋时光印记",
+        "description": "重温我们自2017年以来的点滴足迹——从曼谷街头的初见到旅途山海，再到执手一生的求婚与婚礼。",
+        "allYears": "全部年份",
+        "yearLabel": "{{year}}年",
         "filter": {
             "all": "全部照片",
             "prewedding": "婚纱写真",
