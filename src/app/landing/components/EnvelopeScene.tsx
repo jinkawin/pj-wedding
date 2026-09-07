@@ -3,7 +3,6 @@
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import InvitationCard from './InvitationCard'
-import WaxSeal from './WaxSeal'
 
 type SceneState = 'idle' | 'open'
 
@@ -43,20 +42,12 @@ export default function EnvelopeScene() {
         {/* Envelope (clickable) */}
         <div
           className="relative w-full cursor-pointer select-none"
-          style={{ maxWidth: '300px' }}
+          style={{ maxWidth: '420px' }}
           onClick={handleOpen}
         >
           {/* Breathing float animation on the wrapper */}
           <div className="animate-breathe">
             <ClosedEnvelopeSVG />
-          </div>
-
-          {/* Wax seal — sits right at the horizontal center fold */}
-          <div
-            className="absolute left-1/2 z-10"
-            style={{ top: '50%', transform: 'translate(-50%, -50%)' }}
-          >
-            <WaxSeal isOpen={false} onClick={handleOpen} />
           </div>
         </div>
 
@@ -142,80 +133,44 @@ export default function EnvelopeScene() {
   )
 }
 
-/** Closed envelope SVG — ivory with diamond fold lines */
+/** Closed envelope asset — use the provided PNG for the landing hero */
 function ClosedEnvelopeSVG() {
   return (
-    <svg
-      viewBox="0 0 300 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full"
-      style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.28))' }}
-      aria-hidden="true"
+    <div
+      className="w-full overflow-hidden"
+      style={{
+        filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.28))',
+      }}
     >
-      {/* Base */}
-      <rect x="0.5" y="0.5" width="299" height="199" rx="4" fill="#F5F0E8" />
-
-      {/* Bottom flap */}
-      <polygon points="0,200 300,200 150,108" fill="#EBE4D4" />
-      {/* Left flap */}
-      <polygon points="0,0 0,200 150,108" fill="#EEE8DC" />
-      {/* Right flap */}
-      <polygon points="300,0 300,200 150,108" fill="#EEE8DC" />
-      {/* Top flap (folded over centre) */}
-      <polygon points="0,0 300,0 150,95" fill="#E8E1D0" />
-
-      {/* Fold lines */}
-      <line x1="0" y1="0" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
-      <line x1="300" y1="0" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.55" />
-      <line x1="0" y1="200" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.4" />
-      <line x1="300" y1="200" x2="150" y2="108" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.4" />
-
-      {/* Outer border */}
-      <rect x="0.5" y="0.5" width="299" height="199" rx="4" stroke="#CEC5B0" strokeWidth="1" fill="none" />
-    </svg>
+      <img
+        src="/envelope2.png"
+        alt="Wedding invitation envelope"
+        className="w-full h-auto block"
+        loading="eager"
+        decoding="async"
+        aria-hidden="true"
+      />
+    </div>
   )
 }
 
-/** Open envelope SVG — flap pointing upward, interior liner visible */
+/** Open envelope asset — use the provided PNG for the open state */
 function OpenEnvelopeSVG() {
   return (
-    <svg
-      viewBox="0 0 360 260"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-full"
-      preserveAspectRatio="xMidYMax meet"
-      aria-hidden="true"
+    <div
+      className="w-full h-full overflow-hidden"
+      style={{
+        filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.18))',
+      }}
     >
-      {/* Envelope body */}
-      <rect x="0" y="50" width="360" height="210" rx="4" fill="#F5F0E8" />
-
-      {/* Cream interior liner */}
-      <rect x="6" y="56" width="348" height="198" rx="2" fill="#FAF7F1" />
-
-      {/* Side and bottom flaps drawn on top for depth */}
-      {/* Left flap */}
-      <polygon points="0,50 0,258 180,158" fill="rgba(230,221,205,0.7)" />
-      {/* Right flap */}
-      <polygon points="360,50 360,258 180,158" fill="rgba(230,221,205,0.7)" />
-      {/* Bottom flap */}
-      <polygon points="0,258 360,258 180,158" fill="rgba(220,211,194,0.75)" />
-
-      {/* Open top flap — points upward */}
-      <polygon points="0,50 360,50 180,-24" fill="#E8E1D0" />
-      {/* Flap border line */}
-      <line x1="0" y1="50" x2="180" y2="-24" stroke="#CEC5B0" strokeWidth="0.8" opacity="0.5" />
-      <line x1="360" y1="50" x2="180" y2="-24" stroke="#CEC5B0" strokeWidth="0.8" opacity="0.5" />
-
-      {/* Fold lines */}
-      <line x1="0" y1="50" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
-      <line x1="360" y1="50" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.6" opacity="0.35" />
-      <line x1="0" y1="258" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.45" />
-      <line x1="360" y1="258" x2="180" y2="158" stroke="#BDB4A2" strokeWidth="0.7" opacity="0.45" />
-
-      {/* Outer border */}
-      <rect x="0" y="50" width="360" height="210" rx="4" stroke="#CEC5B0" strokeWidth="1" fill="none" />
-    </svg>
+      <img
+        src="/opened-envelope.png"
+        alt="Open wedding invitation envelope"
+        className="w-full h-full object-cover block"
+        loading="eager"
+        decoding="async"
+        aria-hidden="true"
+      />
+    </div>
   )
 }
