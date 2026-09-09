@@ -189,6 +189,11 @@
       "romanticRose": "Romantic Rose",
       "classicMonogram": "Classic Monogram",
       "modernWarm": "Modern Warm"
+    },
+    "polaroidStyles": {
+      "tripleShots": "Triple Shots",
+      "doubleShots": "Double Shots",
+      "singleShot": "Single Shot"
     }
   }
 }

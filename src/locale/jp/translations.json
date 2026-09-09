@@ -191,6 +191,11 @@
             "romanticRose": "ロマンチックローズ (Romantic Rose)",
             "classicMonogram": "クラシックモノグラム (Classic Monogram)",
             "modernWarm": "モダンウォーム (Modern Warm)"
+        },
+        "polaroidStyles": {
+            "tripleShots": "Triple Shots (3カット)",
+            "doubleShots": "Double Shots (2カット)",
+            "singleShot": "Single Shot (1カット)"
         }
     }
 }

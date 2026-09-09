@@ -3,17 +3,11 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useTranslation } from '@/locale/I18nContext'
-import CameraView from './components/CameraView'
 import HeartPhotoBooth from './components/HeartPhotoBooth'
-import FrameSelector, { FrameId } from './components/FrameSelector'
 import CapturedGallery, { CapturedPhoto } from './components/CapturedGallery'
-
-type BoothMode = 'standard' | 'heart'
 
 export default function PhotoBoothPage() {
   const { t } = useTranslation()
-  const [boothMode, setBoothMode] = useState<BoothMode>('heart')
-  const [selectedFrame, setSelectedFrame] = useState<FrameId>('floralGold')
   const [photos, setPhotos] = useState<CapturedPhoto[]>([])
 
   const handlePhotoCaptured = (dataUrl: string) => {
@@ -55,45 +49,9 @@ export default function PhotoBoothPage() {
           </p>
         </div>
 
-        {/* Mode Switcher Tabs */}
-        <div className="flex items-center justify-center gap-2 p-1 bg-[#E0D8C8]/40 rounded-full max-w-xs mx-auto border border-[#E0D8C8]">
-          <button
-            type="button"
-            onClick={() => setBoothMode('heart')}
-            className={`flex-1 py-2 px-4 rounded-full text-xs font-semibold tracking-wider transition-all ${
-              boothMode === 'heart'
-                ? 'bg-[#C4714A] text-white shadow-sm'
-                : 'text-[#5C4033]/80 hover:text-[#3B2A22]'
-            }`}
-          >
-            🫶 {t('photoBooth.modeHeartAi')}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setBoothMode('standard')}
-            className={`flex-1 py-2 px-4 rounded-full text-xs font-semibold tracking-wider transition-all ${
-              boothMode === 'standard'
-                ? 'bg-[#C4714A] text-white shadow-sm'
-                : 'text-[#5C4033]/80 hover:text-[#3B2A22]'
-            }`}
-          >
-            📷 {t('photoBooth.modeStandard')}
-          </button>
-        </div>
-
-        {/* Frame Selection Toolbar */}
-        <div className="bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-[#E0D8C8] shadow-sm">
-          <FrameSelector selectedFrame={selectedFrame} onSelectFrame={setSelectedFrame} />
-        </div>
-
-        {/* Active Camera Viewport Mode */}
+        {/* Active Camera Viewport */}
         <div className="bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border border-[#E0D8C8] shadow-sm flex flex-col items-center">
-          {boothMode === 'heart' ? (
-            <HeartPhotoBooth onPhotoCaptured={handlePhotoCaptured} />
-          ) : (
-            <CameraView selectedFrame={selectedFrame} onPhotoCaptured={handlePhotoCaptured} />
-          )}
+          <HeartPhotoBooth onPhotoCaptured={handlePhotoCaptured} />
         </div>
 
         {/* Captured Gallery */}

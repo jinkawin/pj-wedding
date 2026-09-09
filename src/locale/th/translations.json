@@ -189,6 +189,11 @@
             "romanticRose": "กุหลาบโรแมนติก (Romantic Rose)",
             "classicMonogram": "คลาสสิก มอนอแกรม (Classic Monogram)",
             "modernWarm": "โมเดิร์น อบอุ่น (Modern Warm)"
+        },
+        "polaroidStyles": {
+            "tripleShots": "Triple Shots (3 รูป)",
+            "doubleShots": "Double Shots (2 รูป)",
+            "singleShot": "Single Shot (1 รูป)"
         }
     }
 }

@@ -1,12 +1,14 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useCallback } from 'react'
-import {
-  HandLandmarker,
-  FilesetResolver,
-  NormalizedLandmark,
-} from '@mediapipe/tasks-vision'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useTranslation } from '@/locale/I18nContext'
+import {
+  POLAROID_STYLES,
+  PolaroidStyleConfig,
+  renderPolaroidComposite,
+} from '../types/polaroidStyles'
+import { useHeartGestureDetector } from '../hooks/useHeartGestureDetector'
+import PolaroidStyleSelector from './PolaroidStyleSelector'
 
 interface HeartPhotoBoothProps {
   onPhotoCaptured?: (dataUrl: string) => void
@@ -15,289 +17,134 @@ interface HeartPhotoBoothProps {
 export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProps) {
   const { t } = useTranslation()
 
+  // Selected strategy state
+  const [selectedStyle, setSelectedStyle] = useState<PolaroidStyleConfig>(POLAROID_STYLES[0])
+
   // DOM References
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const polaroidImgRef = useRef<HTMLImageElement | null>(null)
 
-  // Instances & Loop State
-  const landmarkerRef = useRef<HandLandmarker | null>(null)
-  const animFrameIdRef = useRef<number | null>(null)
-  const streamRef = useRef<MediaStream | null>(null)
-  const consecutiveFramesRef = useRef<number>(0)
-
-  // React State
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [loadingText, setLoadingText] = useState<string>('Initializing AI Model...')
-  const [isCameraStarted, setIsCameraStarted] = useState<boolean>(false)
-  const [permissionError, setPermissionError] = useState<string | null>(null)
-  const [heartDetected, setHeartDetected] = useState<boolean>(false)
-  const [consecutiveCount, setConsecutiveCount] = useState<number>(0)
+  // Multi-shot capture state
+  const [capturedShots, setCapturedShots] = useState<HTMLCanvasElement[]>([])
+  const [currentShotIndex, setCurrentShotIndex] = useState<number>(0)
+  const [isCapturingSequence, setIsCapturingSequence] = useState<boolean>(false)
   const [countdown, setCountdown] = useState<number | null>(null)
-  const [capturedImage, setCapturedImage] = useState<string | null>(null)
+  const [finalPolaroidUrl, setFinalPolaroidUrl] = useState<string | null>(null)
 
-  // 1. Calculate Euclidean distance between two 2D/3D landmarks
-  const calculateDistance = (p1: NormalizedLandmark, p2: NormalizedLandmark): number => {
-    const dx = p1.x - p2.x
-    const dy = p1.y - p2.y
+  // Preload polaroid background image template asset
+  useEffect(() => {
+    const img = new Image()
+    img.src = selectedStyle.templateAsset
+    img.onload = () => {
+      polaroidImgRef.current = img
+    }
+  }, [selectedStyle])
 
-    return Math.sqrt(dx * dx + dy * dy)
-  }
-
-  // 2. Check "Heart Hands" gesture criteria between 2 detected hands
-  const checkHeartHandGesture = useCallback(
-    (hand1: NormalizedLandmark[], hand2: NormalizedLandmark[]): boolean => {
-      // Landmark indices:
-      // 4: Thumb Tip
-      // 8: Index Finger Tip
-      const thumb1 = hand1[4]
-      const index1 = hand1[8]
-      const thumb2 = hand2[4]
-      const index2 = hand2[8]
-
-      if (!thumb1 || !index1 || !thumb2 || !index2) return false
-
-      // Condition 1 (Thumbs): Distance between Hand 1 Thumb Tip and Hand 2 Thumb Tip < 0.08
-      const thumbDistance = calculateDistance(thumb1, thumb2)
-
-      // Condition 2 (Index Fingers): Distance between Hand 1 Index Tip and Hand 2 Index Tip < 0.08
-      const indexDistance = calculateDistance(index1, index2)
-
-      // Condition 3 (Shape): Index tips must be physically HIGHER on canvas (lower Y value) than thumb tips
-      const avgIndexY = (index1.y + index2.y) / 2
-      const avgThumbY = (thumb1.y + thumb2.y) / 2
-      const isShapeCorrect = avgIndexY < avgThumbY
-
-      const isThumbTouch = thumbDistance < 0.08
-      const isIndexTouch = indexDistance < 0.08
-
-      return isThumbTouch && isIndexTouch && isShapeCorrect
+  // Composite captured shots into polaroid layout strategy
+  const generatePolaroidStrip = useCallback(
+    (shots: HTMLCanvasElement[]) => {
+      if (!polaroidImgRef.current) return
+      const finalUrl = renderPolaroidComposite(selectedStyle, shots, polaroidImgRef.current)
+      if (finalUrl) {
+        setFinalPolaroidUrl(finalUrl)
+        if (onPhotoCaptured) {
+          onPhotoCaptured(finalUrl)
+        }
+      }
     },
-    [],
+    [selectedStyle, onPhotoCaptured],
   )
 
-  // 3. Capture canvas frame to base64 image
-  const takeSnapshot = useCallback(() => {
-    if (!canvasRef.current) return
-    const canvas = canvasRef.current
-    const dataUrl = canvas.toDataURL('image/png')
-    setCapturedImage(dataUrl)
-    if (onPhotoCaptured) {
-      onPhotoCaptured(dataUrl)
-    }
-  }, [onPhotoCaptured])
-
-  // 4. Trigger countdown logic once 30 consecutive frames are locked
-  const startCountdown = useCallback(() => {
-    let current = 3
-    setCountdown(current)
-
-    const timer = setInterval(() => {
-      current -= 1
-      if (current > 0) {
-        setCountdown(current)
-      } else {
-        clearInterval(timer)
-        setCountdown(null)
-        takeSnapshot()
-      }
-    }, 900)
-  }, [takeSnapshot])
-
-  // 5. Detection render loop
-  const detectLoop = useCallback(() => {
-    if (
-      !landmarkerRef.current ||
-      !videoRef.current ||
-      !canvasRef.current ||
-      videoRef.current.readyState < 2
-    ) {
-      animFrameIdRef.current = requestAnimationFrame(detectLoop)
-
-      return
-    }
-
+  // Capture current video frame into offscreen canvas
+  const captureCurrentFrame = useCallback((): HTMLCanvasElement | null => {
+    if (!videoRef.current) return null
     const video = videoRef.current
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
+    const offscreen = document.createElement('canvas')
+    offscreen.width = video.videoWidth || 1280
+    offscreen.height = video.videoHeight || 960
 
-    if (!ctx) {
-      animFrameIdRef.current = requestAnimationFrame(detectLoop)
+    const ctx = offscreen.getContext('2d')
+    if (!ctx) return null
 
-      return
-    }
-
-    // Match canvas display dimensions to webcam video feed
-    if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-      canvas.width = video.videoWidth || 1280
-      canvas.height = video.videoHeight || 960
-    }
-
-    const width = canvas.width
-    const height = canvas.height
-
-    // Draw mirrored video feed on canvas
-    ctx.save()
-    ctx.clearRect(0, 0, width, height)
-    ctx.translate(width, 0)
+    ctx.translate(offscreen.width, 0)
     ctx.scale(-1, 1)
-    ctx.drawImage(video, 0, 0, width, height)
-    ctx.restore()
+    ctx.drawImage(video, 0, 0, offscreen.width, offscreen.height)
 
-    // Detect hand landmarks
-    const startTimeMs = performance.now()
-    const results = landmarkerRef.current.detectForVideo(video, startTimeMs)
-
-    let isHeartFormed = false
-
-    if (results.landmarks && results.landmarks.length >= 2) {
-      const hand1 = results.landmarks[0]
-      const hand2 = results.landmarks[1]
-      isHeartFormed = checkHeartHandGesture(hand1, hand2)
-    }
-
-    // Draw landmarks & heart indicator on canvas
-    if (results.landmarks) {
-      ctx.save()
-      // Mirror context for landmarks drawing to align with mirrored camera feed
-      ctx.translate(width, 0)
-      ctx.scale(-1, 1)
-
-      results.landmarks.forEach((landmarks) => {
-        landmarks.forEach((lm) => {
-          ctx.beginPath()
-          ctx.arc(lm.x * width, lm.y * height, 4, 0, 2 * Math.PI)
-          ctx.fillStyle = isHeartFormed ? '#FF4D6D' : '#D4AF37'
-          ctx.fill()
-        })
-      })
-      ctx.restore()
-    }
-
-    // Handle 30 consecutive frame detection state
-    if (isHeartFormed && !capturedImage && countdown === null) {
-      consecutiveFramesRef.current += 1
-      setConsecutiveCount(consecutiveFramesRef.current)
-
-      if (consecutiveFramesRef.current >= 30) {
-        setHeartDetected(true)
-        consecutiveFramesRef.current = 0
-        startCountdown()
-      }
-    } else if (!isHeartFormed && countdown === null) {
-      consecutiveFramesRef.current = 0
-      setConsecutiveCount(0)
-      setHeartDetected(false)
-    }
-
-    animFrameIdRef.current = requestAnimationFrame(detectLoop)
-  }, [checkHeartHandGesture, capturedImage, countdown, startCountdown])
-
-  // 6. Initialize MediaPipe HandLandmarker & Webcam
-  useEffect(() => {
-    let isMounted = true
-
-    const initMediaPipe = async () => {
-      try {
-        setLoadingText('Loading MediaPipe Vision WASM...')
-        const vision = await FilesetResolver.forVisionTasks(
-          'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm',
-        )
-
-        if (!isMounted) return
-
-        setLoadingText('Loading Hand Detector Model...')
-        const landmarker = await HandLandmarker.createFromOptions(vision, {
-          baseOptions: {
-            modelAssetPath:
-              'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',
-            delegate: 'GPU',
-          },
-          runningMode: 'VIDEO',
-          numHands: 2,
-        })
-
-        if (!isMounted) return
-
-        landmarkerRef.current = landmarker
-        setIsLoading(false)
-
-        // Request Webcam Stream
-        const constraints = { video: { width: { ideal: 1280 }, height: { ideal: 960 } } }
-        const stream = await navigator.mediaDevices.getUserMedia(constraints)
-
-        if (!isMounted) {
-          stream.getTracks().forEach((track) => track.stop())
-
-          return
-        }
-
-        streamRef.current = stream
-
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream
-          await videoRef.current.play()
-          setIsCameraStarted(true)
-        }
-      } catch {
-        if (isMounted) {
-          setIsLoading(false)
-          setPermissionError(
-            'Failed to load camera or AI model. Please ensure camera permissions are granted.',
-          )
-        }
-      }
-    }
-
-    initMediaPipe()
-
-    return () => {
-      isMounted = false
-
-      // Cancel animation loop
-      if (animFrameIdRef.current) {
-        cancelAnimationFrame(animFrameIdRef.current)
-      }
-
-      // Stop MediaStream tracks
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => track.stop())
-        streamRef.current = null
-      }
-
-      // Close MediaPipe landmarker
-      if (landmarkerRef.current) {
-        landmarkerRef.current.close()
-        landmarkerRef.current = null
-      }
-    }
+    return offscreen
   }, [])
 
-  // Start detect loop once camera is playing
-  useEffect(() => {
-    if (isCameraStarted && !isLoading) {
-      animFrameIdRef.current = requestAnimationFrame(detectLoop)
+  // Start sequence of shots based on the selected Polaroid strategy required shots count
+  const startPolaroidSequence = useCallback(() => {
+    setIsCapturingSequence(true)
+    setCapturedShots([])
+
+    let shotCount = 0
+    const accumShots: HTMLCanvasElement[] = []
+
+    const takeOneShot = () => {
+      let count = 3
+      setCountdown(count)
+
+      const timer = setInterval(() => {
+        count -= 1
+        if (count > 0) {
+          setCountdown(count)
+        } else {
+          clearInterval(timer)
+          setCountdown(null)
+
+          const shot = captureCurrentFrame()
+          if (shot) {
+            accumShots.push(shot)
+            setCapturedShots([...accumShots])
+          }
+
+          shotCount += 1
+          setCurrentShotIndex(shotCount)
+
+          if (shotCount < selectedStyle.shotsRequired) {
+            setTimeout(takeOneShot, 800)
+          } else {
+            setIsCapturingSequence(false)
+            generatePolaroidStrip(accumShots)
+          }
+        }
+      }, 800)
     }
 
-    return () => {
-      if (animFrameIdRef.current) {
-        cancelAnimationFrame(animFrameIdRef.current)
-      }
-    }
-  }, [isCameraStarted, isLoading, detectLoop])
+    takeOneShot()
+  }, [captureCurrentFrame, generatePolaroidStrip, selectedStyle.shotsRequired])
+
+  // Custom hook for MediaPipe gesture detection
+  const {
+    isLoading,
+    loadingText,
+    permissionError,
+    heartDetected,
+    consecutiveCount,
+    resetGestureState,
+  } = useHeartGestureDetector({
+    videoRef,
+    canvasRef,
+    onGestureLock: startPolaroidSequence,
+    isLocked: !!finalPolaroidUrl || isCapturingSequence || countdown !== null,
+  })
 
   const handleRetake = () => {
-    setCapturedImage(null)
-    setHeartDetected(false)
+    setFinalPolaroidUrl(null)
+    setCapturedShots([])
+    setCurrentShotIndex(0)
+    setIsCapturingSequence(false)
     setCountdown(null)
-    consecutiveFramesRef.current = 0
-    setConsecutiveCount(0)
+    resetGestureState()
   }
 
   const handleDownload = () => {
-    if (!capturedImage) return
+    if (!finalPolaroidUrl) return
     const link = document.createElement('a')
-    link.href = capturedImage
-    link.download = `heart-photo-${Date.now()}.png`
+    link.href = finalPolaroidUrl
+    link.download = `${selectedStyle.id}-${Date.now()}.png`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -308,9 +155,19 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
       {/* Hidden Webcam Source Video */}
       <video ref={videoRef} playsInline muted className="hidden" />
 
+      {/* Polaroid Style Selection Toolbar */}
+      {!finalPolaroidUrl && !isCapturingSequence && (
+        <div className="w-full bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-[#E0D8C8]">
+          <PolaroidStyleSelector
+            selectedStyle={selectedStyle}
+            onSelectStyle={setSelectedStyle}
+          />
+        </div>
+      )}
+
       {/* Main Viewport Container */}
       <div className="relative w-full max-w-2xl aspect-[4/3] rounded-3xl overflow-hidden bg-[#3B2A22]/90 border-4 border-[#E0D8C8] shadow-2xl flex items-center justify-center">
-        {/* Loading Spinner State */}
+        {/* Loading Spinner */}
         {isLoading && (
           <div className="absolute inset-0 bg-[#3B2A22] z-50 flex flex-col items-center justify-center space-y-4 p-6 text-center text-white">
             <div className="w-12 h-12 border-4 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
@@ -320,59 +177,62 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
           </div>
         )}
 
-        {/* Permission Error State */}
+        {/* Error State */}
         {permissionError && (
           <div className="absolute inset-0 bg-[#3B2A22] z-40 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
             <p className="text-sm font-lato text-red-300">{permissionError}</p>
           </div>
         )}
 
-        {/* Countdown Ping Overlay */}
+        {/* Countdown Overlay */}
         {countdown !== null && (
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-30 flex flex-col items-center justify-center space-y-2">
-            <span className="text-8xl sm:text-9xl font-serif text-white font-bold animate-ping">
+            <span className="text-7xl sm:text-8xl font-serif text-white font-bold animate-ping">
               {countdown}
             </span>
-            <span className="text-sm font-serif text-[#FAF7F1] tracking-widest uppercase">
-              Hold Your Heart Gesture!
+            <span className="text-xs sm:text-sm font-serif text-[#FAF7F1] tracking-widest uppercase">
+              Taking Shot {currentShotIndex + 1} of {selectedStyle.shotsRequired}!
             </span>
           </div>
         )}
 
-        {/* Live Mirror Canvas */}
-        {!capturedImage && (
+        {/* Live Camera Canvas Feed */}
+        {!finalPolaroidUrl && (
           <canvas ref={canvasRef} className="w-full h-full object-cover" />
         )}
 
-        {/* Captured Final Image Result */}
-        {capturedImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={capturedImage}
-            alt="Heart Hands Snapshot"
-            className="w-full h-full object-cover z-20 animate-in fade-in duration-300"
-          />
+        {/* Rendered Polaroid Composite Result */}
+        {finalPolaroidUrl && (
+          <div className="w-full h-full p-4 overflow-y-auto flex items-center justify-center bg-[#FAF7F1]/90 z-20">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={finalPolaroidUrl}
+              alt="Polaroid Strip Result"
+              className="max-h-full rounded-lg shadow-xl border border-[#E0D8C8]"
+            />
+          </div>
         )}
 
-        {/* Live Gesture Detection Progress HUD */}
-        {!capturedImage && !isLoading && (
+        {/* Gesture HUD */}
+        {!finalPolaroidUrl && !isLoading && (
           <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
             <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-white flex items-center gap-2">
-              <span className="text-xl">{heartDetected ? '💖' : '🫶'}</span>
               <span className="text-xs font-medium tracking-wide">
-                {heartDetected
-                  ? 'Heart Detected! Snapping...'
-                  : consecutiveCount > 0
-                    ? `Forming Heart... (${consecutiveCount}/30)`
-                    : 'Make a Heart gesture with both hands!'}
+                {isCapturingSequence
+                  ? `Capturing... (${capturedShots.length}/${selectedStyle.shotsRequired} Shots)`
+                  : heartDetected
+                    ? `Heart Detected! Starting ${selectedStyle.shotsRequired}-Shot Sequence...`
+                    : consecutiveCount > 0
+                      ? `Forming Heart... (${consecutiveCount}/30)`
+                      : `Make a Mini-Heart 🫰 or Big Heart 🫶 to take ${selectedStyle.shotsRequired} shots!`}
               </span>
             </div>
           </div>
         )}
       </div>
 
-      {/* Action Controls for Captured Snapshot */}
-      {capturedImage && (
+      {/* Action Controls */}
+      {finalPolaroidUrl && (
         <div className="flex items-center gap-4 animate-in slide-in-from-bottom-3 duration-200">
           <button
             type="button"
@@ -387,7 +247,7 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
               />
             </svg>
-            {t('photoBooth.download')}
+            Download Polaroid
           </button>
 
           <button

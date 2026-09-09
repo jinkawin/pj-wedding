@@ -190,6 +190,11 @@
             "romanticRose": "浪漫玫瑰 (Romantic Rose)",
             "classicMonogram": "经典印记 (Classic Monogram)",
             "modernWarm": "现代暖意 (Modern Warm)"
+        },
+        "polaroidStyles": {
+            "tripleShots": "Triple Shots (3张)",
+            "doubleShots": "Double Shots (2张)",
+            "singleShot": "Single Shot (1张)"
         }
     }
 }
