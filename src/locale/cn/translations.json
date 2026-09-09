@@ -12,7 +12,8 @@
         "gallery": "相册",
         "location": "婚礼地点",
         "about": "关于我们",
-        "register": "出席回复"
+        "register": "出席回复",
+        "photoBooth": "照相馆 / 拍照亭"
     },
     "invitation": {
         "together": "诚挚邀请您参加我们的婚礼",
@@ -164,5 +165,31 @@
         "close": "关闭预览 (Esc)",
         "prev": "上一张 (←)",
         "next": "下一张 (→)"
+    },
+    "photoBooth": {
+        "subtitle": "定格幸福瞬间",
+        "title": "婚礼拍照亭",
+        "description": "实时拍照，搭配 Parima & Jinkawin 的专属婚礼相框，一键保存美好记忆！",
+        "startCamera": "开启相机",
+        "stopCamera": "关闭相机",
+        "switchCamera": "切换摄像头",
+        "takePhoto": "拍照",
+        "countdownSnap": "即将在 {{count}} 秒后拍照...",
+        "permissionDenied": "无法访问相机或设备不支持。",
+        "selectFrame": "选择婚礼相框",
+        "modeStandard": "常规拍照",
+        "modeHeartAi": "AI 比心检测",
+        "galleryTitle": "您的本次拍照作品",
+        "download": "下载照片",
+        "delete": "删除照片",
+        "noPhotos": "暂无照片，点击上方按钮开始拍照吧！",
+        "retake": "重拍",
+        "frames": {
+            "none": "无相框",
+            "floralGold": "鎏金花卉 (Floral Gold)",
+            "romanticRose": "浪漫玫瑰 (Romantic Rose)",
+            "classicMonogram": "经典印记 (Classic Monogram)",
+            "modernWarm": "现代暖意 (Modern Warm)"
+        }
     }
 }

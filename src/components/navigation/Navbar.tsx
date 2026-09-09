@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { key: 'nav.location', href: '/location' },
   { key: 'nav.about', href: '/about' },
   { key: 'nav.register', href: '/register' },
+  { key: 'nav.photoBooth', href: '/photo-booth' },
 ]
 
 export default function Navbar() {

@@ -13,7 +13,8 @@
         "gallery": "ギャラリー",
         "location": "会場アクセス",
         "about": "新郎新婦紹介",
-        "register": "ご出席登録"
+        "register": "ご出席登録",
+        "photoBooth": "フォトブース / 記念撮影"
     },
     "invitation": {
         "together": "結婚披露宴のご案内",
@@ -165,5 +166,31 @@
         "close": "プレビューを閉じる (Esc)",
         "prev": "前の写真 (←)",
         "next": "次の写真 (→)"
+    },
+    "photoBooth": {
+        "subtitle": "最高の瞬間をカタチに",
+        "title": "ウェディング・フォトブース",
+        "description": "リアルタイムで撮影して、Parima & Jinkawinのオリジナルフォトフレームで素敵な思い出を保存しましょう！",
+        "startCamera": "カメラを起動",
+        "stopCamera": "カメラを停止",
+        "switchCamera": "カメラ切り替え",
+        "takePhoto": "写真を撮影",
+        "countdownSnap": "{{count}} 秒後に撮影します...",
+        "permissionDenied": "カメラへのアクセスが拒否されたか、お使いの端末でサポートされていません。",
+        "selectFrame": "フォトフレームを選択",
+        "modeStandard": "通常カメラ",
+        "modeHeartAi": "AI ハート検出",
+        "galleryTitle": "今回撮影した写真",
+        "download": "写真を保存",
+        "delete": "削除",
+        "noPhotos": "まだ写真がありません。上のボタンからカメラを起動して撮影しましょう！",
+        "retake": "撮り直す",
+        "frames": {
+            "none": "フレームなし",
+            "floralGold": "フローラルゴールド (Floral Gold)",
+            "romanticRose": "ロマンチックローズ (Romantic Rose)",
+            "classicMonogram": "クラシックモノグラム (Classic Monogram)",
+            "modernWarm": "モダンウォーム (Modern Warm)"
+        }
     }
 }

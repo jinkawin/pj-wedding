@@ -11,7 +11,8 @@
     "gallery": "Gallery",
     "location": "Location",
     "about": "About Us",
-    "register": "Register"
+    "register": "Register",
+    "photoBooth": "Photo Booth"
   },
   "invitation": {
     "together": "Together with their families",
@@ -163,5 +164,31 @@
     "close": "Close Preview (Esc)",
     "prev": "Previous Photo (←)",
     "next": "Next Photo (→)"
+  },
+  "photoBooth": {
+    "subtitle": "Capture the Moment",
+    "title": "Wedding Photo Booth",
+    "description": "Snap instant photos, decorate with custom wedding frames, and keep memories from Parima & Jinkawin's wedding!",
+    "startCamera": "Start Camera",
+    "stopCamera": "Stop Camera",
+    "switchCamera": "Flip Camera",
+    "takePhoto": "Snap Photo",
+    "countdownSnap": "Snapping in {{count}}...",
+    "permissionDenied": "Camera access was denied or not supported on this device.",
+    "selectFrame": "Choose Wedding Frame",
+    "modeStandard": "Standard Camera",
+    "modeHeartAi": "AI Heart Hands",
+    "galleryTitle": "Your Session Snapshots",
+    "download": "Download Photo",
+    "delete": "Delete",
+    "noPhotos": "No photos taken yet. Snap a picture above!",
+    "retake": "Retake Photo",
+    "frames": {
+      "none": "No Frame",
+      "floralGold": "Floral Gold",
+      "romanticRose": "Romantic Rose",
+      "classicMonogram": "Classic Monogram",
+      "modernWarm": "Modern Warm"
+    }
   }
 }

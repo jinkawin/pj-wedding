@@ -768,6 +768,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mediapipe/tasks-vision@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@mediapipe/tasks-vision@npm:1.0.1"
+  checksum: 10c0/0b3d09f935dc56ff47c66d26207bbbaf763dc0105e7f0bd3ca7ff7423b96fd017963b5291f72da921b9c8c3c46221fbfcc4e3eba86b0d45026df7e090f2b9332
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^1.1.4":
   version: 1.2.3
   resolution: "@napi-rs/wasm-runtime@npm:1.2.3"
@@ -4366,6 +4373,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pj-wedding@workspace:."
   dependencies:
+    "@mediapipe/tasks-vision": "npm:^1.0.1"
     "@types/jsdom": "npm:^30"
     "@types/node": "npm:^26.4.0"
     "@types/react": "npm:^19.2.18"
