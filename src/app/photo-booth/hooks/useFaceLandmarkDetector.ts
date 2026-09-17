@@ -28,12 +28,13 @@ export function useFaceLandmarkDetector({
   const [loadingText, setLoadingText] = useState<string>('Initializing Face AI...')
   const [detectedFacesCount, setDetectedFacesCount] = useState<number>(0)
   const [eyePositions, setEyePositions] = useState<EyePosition[]>([])
-  const [selectedStrategy, setSelectedStrategy] = useState<SunglassesStrategy>(
-    getSunglassesStrategy(strategyId),
-  )
+  const [selectedStrategy, setSelectedStrategy] = useState<SunglassesStrategy>(() => {
+    return getSunglassesStrategy(strategyId) ?? getSunglassesStrategy('classic')!
+  })
 
   useEffect(() => {
-    setSelectedStrategy(getSunglassesStrategy(strategyId))
+    const nextStrategy = getSunglassesStrategy(strategyId) ?? getSunglassesStrategy('classic')!
+    setSelectedStrategy(nextStrategy)
   }, [strategyId])
 
   // Extract EyePosition geometry in screen coordinates from 478 face landmarks
@@ -82,7 +83,7 @@ export function useFaceLandmarkDetector({
   // Draw sunglasses overlays for up to 3 faces onto canvas context
   const renderSunglassesOverlay = useCallback(
     (ctx: CanvasRenderingContext2D, positions: EyePosition[]) => {
-      const activeStrategy = getSunglassesStrategy(strategyId)
+      const activeStrategy = getSunglassesStrategy(strategyId) ?? getSunglassesStrategy('classic')!
       positions.slice(0, 3).forEach((pos) => {
         activeStrategy.draw(ctx, pos)
       })
