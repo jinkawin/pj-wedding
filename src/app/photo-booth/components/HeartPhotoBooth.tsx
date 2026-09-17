@@ -122,7 +122,8 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
     loadingText,
     permissionError,
     heartDetected,
-    consecutiveCount,
+    holdProgress,
+    matchedGesture,
     resetGestureState,
   } = useHeartGestureDetector({
     videoRef,
@@ -221,10 +222,10 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
                 {isCapturingSequence
                   ? `Capturing... (${capturedShots.length}/${selectedStyle.shotsRequired} Shots)`
                   : heartDetected
-                    ? `Heart Detected! Starting ${selectedStyle.shotsRequired}-Shot Sequence...`
-                    : consecutiveCount > 0
-                      ? `Forming Heart... (${consecutiveCount}/30)`
-                      : `Make a Mini-Heart 🫰 or Big Heart 🫶 to take ${selectedStyle.shotsRequired} shots!`}
+                    ? `${matchedGesture?.label ?? 'Gesture'} Detected! Starting ${selectedStyle.shotsRequired}-Shot Sequence...`
+                    : holdProgress > 0
+                      ? `Holding ${matchedGesture?.label ?? 'Gesture'} ${matchedGesture?.emoji ?? ''}... (${Math.round(holdProgress * 100)}%)`
+                      : `Show OK 👌, Victory ✌️, High 5 🖐️ or Big Heart 🫶 to take ${selectedStyle.shotsRequired} shots!`}
               </span>
             </div>
           </div>

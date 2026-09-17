@@ -1,11 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import {
-  HandLandmarker,
-  FilesetResolver,
-  NormalizedLandmark,
-} from '@mediapipe/tasks-vision'
+import { HandLandmarker, FilesetResolver } from '@mediapipe/tasks-vision'
+import { HAND_GESTURE_STRATEGIES, HandGestureStrategy } from './handGestureStrategies'
 
 interface UseHeartGestureDetectorParams {
   videoRef: React.RefObject<HTMLVideoElement | null>
@@ -13,6 +10,8 @@ interface UseHeartGestureDetectorParams {
   onGestureLock: () => void
   isLocked: boolean
 }
+
+const GESTURE_HOLD_DURATION_MS = 500
 
 export function useHeartGestureDetector({
   videoRef,
@@ -23,68 +22,15 @@ export function useHeartGestureDetector({
   const landmarkerRef = useRef<HandLandmarker | null>(null)
   const animFrameIdRef = useRef<number | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
-  const consecutiveFramesRef = useRef<number>(0)
+  const gestureStartTimeRef = useRef<number | null>(null)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [loadingText, setLoadingText] = useState<string>('Initializing AI Model...')
   const [isCameraStarted, setIsCameraStarted] = useState<boolean>(false)
   const [permissionError, setPermissionError] = useState<string | null>(null)
   const [heartDetected, setHeartDetected] = useState<boolean>(false)
-  const [consecutiveCount, setConsecutiveCount] = useState<number>(0)
-
-  const calculateDistance = (p1: NormalizedLandmark, p2: NormalizedLandmark): number => {
-    const dx = p1.x - p2.x
-    const dy = p1.y - p2.y
-
-    return Math.sqrt(dx * dx + dy * dy)
-  }
-
-  const checkMiniHeartGesture = useCallback(
-    (landmarks: NormalizedLandmark[]): boolean => {
-      const thumbTip = landmarks[4]
-      const indexTip = landmarks[8]
-      const indexPIP = landmarks[6]
-      const middleTip = landmarks[12]
-      const ringTip = landmarks[16]
-
-      if (!thumbTip || !indexTip || !indexPIP || !middleTip || !ringTip) return false
-
-      const distThumbIndexTip = calculateDistance(thumbTip, indexTip)
-      const isMiddleFolded = middleTip.y > indexPIP.y
-      const isRingFolded = ringTip.y > indexPIP.y
-
-      const isTipTouching = distThumbIndexTip < 0.075
-      const isNearFingerHeartShape =
-        Math.abs(thumbTip.x - indexTip.x) < 0.06 && Math.abs(thumbTip.y - indexTip.y) < 0.07
-
-      return isTipTouching && isNearFingerHeartShape && isMiddleFolded && isRingFolded
-    },
-    [],
-  )
-
-  const checkHeartHandGesture = useCallback(
-    (hand1: NormalizedLandmark[], hand2: NormalizedLandmark[]): boolean => {
-      const thumb1 = hand1[4]
-      const index1 = hand1[8]
-      const thumb2 = hand2[4]
-      const index2 = hand2[8]
-
-      if (!thumb1 || !index1 || !thumb2 || !index2) return false
-
-      const thumbDistance = calculateDistance(thumb1, thumb2)
-      const indexDistance = calculateDistance(index1, index2)
-
-      const avgIndexY = (index1.y + index2.y) / 2
-      const avgThumbY = (thumb1.y + thumb2.y) / 2
-      const isShapeCorrect = avgIndexY < avgThumbY
-
-      const isThumbTouch = thumbDistance < 0.08
-      const isIndexTouch = indexDistance < 0.08
-
-      return isThumbTouch && isIndexTouch && isShapeCorrect
-    },
-    [],
-  )
+  const [holdProgress, setHoldProgress] = useState<number>(0)
+  const [matchedGesture, setMatchedGesture] = useState<HandGestureStrategy | null>(null)
 
   const detectLoop = useCallback(() => {
     if (
@@ -126,18 +72,18 @@ export function useHeartGestureDetector({
     const startTimeMs = performance.now()
     const results = landmarkerRef.current.detectForVideo(video, startTimeMs)
 
-    let isHeartFormed = false
+    let isGestureFormed = false
+    let detectedStrategy: HandGestureStrategy | null = null
 
     if (results.landmarks && results.landmarks.length >= 1) {
-      const hasMiniHeart = results.landmarks.some((handLandmarks) =>
-        checkMiniHeartGesture(handLandmarks),
-      )
+      detectedStrategy =
+        HAND_GESTURE_STRATEGIES.find(
+          (strategy) =>
+            results.landmarks.length >= strategy.handsRequired &&
+            strategy.detect(results.landmarks),
+        ) ?? null
 
-      const hasBigHeart =
-        results.landmarks.length >= 2 &&
-        checkHeartHandGesture(results.landmarks[0], results.landmarks[1])
-
-      isHeartFormed = hasMiniHeart || hasBigHeart
+      isGestureFormed = detectedStrategy !== null
     }
 
     if (results.landmarks) {
@@ -149,37 +95,40 @@ export function useHeartGestureDetector({
         landmarks.forEach((lm) => {
           ctx.beginPath()
           ctx.arc(lm.x * width, lm.y * height, 4, 0, 2 * Math.PI)
-          ctx.fillStyle = isHeartFormed ? '#FF4D6D' : '#D4AF37'
+          ctx.fillStyle = isGestureFormed ? '#FF4D6D' : '#D4AF37'
           ctx.fill()
         })
       })
       ctx.restore()
     }
 
-    if (isHeartFormed && !isLocked) {
-      consecutiveFramesRef.current += 1
-      setConsecutiveCount(consecutiveFramesRef.current)
+    if (isGestureFormed && !isLocked) {
+      const now = performance.now()
+      if (gestureStartTimeRef.current === null) {
+        gestureStartTimeRef.current = now
+      }
 
-      if (consecutiveFramesRef.current >= 30) {
+      const elapsedTime = now - gestureStartTimeRef.current
+      const progress = Math.min(elapsedTime / GESTURE_HOLD_DURATION_MS, 1)
+
+      setHoldProgress(progress)
+      setMatchedGesture(detectedStrategy)
+
+      if (elapsedTime >= GESTURE_HOLD_DURATION_MS) {
         setHeartDetected(true)
-        consecutiveFramesRef.current = 0
+        gestureStartTimeRef.current = null
+        setHoldProgress(0)
         onGestureLock()
       }
-    } else if (!isHeartFormed && !isLocked) {
-      consecutiveFramesRef.current = 0
-      setConsecutiveCount(0)
+    } else if (!isGestureFormed && !isLocked) {
+      gestureStartTimeRef.current = null
+      setHoldProgress(0)
       setHeartDetected(false)
+      setMatchedGesture(null)
     }
 
     animFrameIdRef.current = requestAnimationFrame(detectLoop)
-  }, [
-    checkHeartHandGesture,
-    checkMiniHeartGesture,
-    isLocked,
-    onGestureLock,
-    canvasRef,
-    videoRef,
-  ])
+  }, [isLocked, onGestureLock, canvasRef, videoRef])
 
   useEffect(() => {
     let isMounted = true
@@ -270,8 +219,9 @@ export function useHeartGestureDetector({
 
   const resetGestureState = () => {
     setHeartDetected(false)
-    consecutiveFramesRef.current = 0
-    setConsecutiveCount(0)
+    gestureStartTimeRef.current = null
+    setHoldProgress(0)
+    setMatchedGesture(null)
   }
 
   return {
@@ -279,7 +229,8 @@ export function useHeartGestureDetector({
     loadingText,
     permissionError,
     heartDetected,
-    consecutiveCount,
+    holdProgress,
+    matchedGesture,
     resetGestureState,
   }
 }
