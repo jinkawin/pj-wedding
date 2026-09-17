@@ -56,7 +56,8 @@ export default function SeatingPage() {
   // Filtered tables based on category
   const filteredTables = useMemo(() => {
     if (selectedCategory === 'all') return SEATING_TABLES
-    return SEATING_TABLES.filter((t) => t.category === selectedCategory)
+
+return SEATING_TABLES.filter((t) => t.category === selectedCategory)
   }, [selectedCategory])
 
   const selectedTable = useMemo(() => {

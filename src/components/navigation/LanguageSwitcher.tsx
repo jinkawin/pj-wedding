@@ -24,7 +24,8 @@ export default function LanguageSwitcher() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+
+return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   return (
@@ -54,7 +55,8 @@ export default function LanguageSwitcher() {
         <div className="absolute right-0 mt-1.5 w-32 rounded-xl border border-[#E0D8C8] bg-white/95 backdrop-blur-md shadow-lg py-1 z-50 animate-in fade-in zoom-in-95 duration-150">
           {LANGUAGES.map((lang) => {
             const isSelected = locale === lang.code
-            return (
+
+return (
               <button
                 key={lang.code}
                 type="button"

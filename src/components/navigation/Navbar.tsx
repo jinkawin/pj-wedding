@@ -41,7 +41,8 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-5">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href
-              return (
+
+return (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -84,7 +85,8 @@ export default function Navbar() {
         <div className="lg:hidden pt-3 pb-2 border-t border-[#E0D8C8] mt-3 space-y-1 animate-in slide-in-from-top-2 duration-200">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href
-            return (
+
+return (
               <Link
                 key={item.href}
                 href={item.href}

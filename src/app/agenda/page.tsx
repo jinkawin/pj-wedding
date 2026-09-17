@@ -13,7 +13,8 @@ export default function AgendaPage() {
 
   const filteredEvents = AGENDA_EVENTS.filter((event) => {
     if (filterPeriod === 'all') return true
-    return event.period === filterPeriod
+
+return event.period === filterPeriod
   })
 
   return (

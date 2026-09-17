@@ -17,7 +17,8 @@ export default function AddToCalendar() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+
+return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const title = 'Parima & Jinkawin Wedding'
@@ -30,16 +31,16 @@ export default function AddToCalendar() {
 
   // Google Calendar URL
   const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-    title
+    title,
   )}&dates=${startTimeUtc}/${endTimeUtc}&details=${encodeURIComponent(
-    description
+    description,
   )}&location=${encodeURIComponent(location)}`
 
   // Outlook Web URL
   const outlookUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(
-    title
+    title,
   )}&startdt=2027-02-27T10:00:00%2B07:00&enddt=2027-02-27T14:00:00%2B07:00&body=${encodeURIComponent(
-    description
+    description,
   )}&location=${encodeURIComponent(location)}`
 
   // Download iCal (.ics) file

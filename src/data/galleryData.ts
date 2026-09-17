@@ -213,5 +213,5 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 ]
 
 export const TIMELINE_YEARS = Array.from(
-  new Set(GALLERY_ITEMS.map((item) => item.year))
+  new Set(GALLERY_ITEMS.map((item) => item.year)),
 ).sort((a, b) => a - b)

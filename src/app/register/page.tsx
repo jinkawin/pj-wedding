@@ -155,7 +155,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    followersCount: Math.max(1, parseInt(e.target.value) || 1),
+                    followersCount: Math.max(1, parseInt(e.target.value, 10) || 1),
                   })
                 }
                 className="w-full px-4 py-3 rounded-xl bg-white/80 border border-[#E0D8C8] text-[#3B2A22] placeholder-[#5C4033]/40 font-lato text-sm focus:outline-none focus:ring-2 focus:ring-[#C4714A]/40 focus:border-[#C4714A] transition-all"

@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { HandLandmarker, FilesetResolver } from '@mediapipe/tasks-vision'
+import { HandLandmarker, FaceLandmarker, FilesetResolver } from '@mediapipe/tasks-vision'
 import { HAND_GESTURE_STRATEGIES, HandGestureStrategy } from './handGestureStrategies'
+import { getSunglassesStrategy } from './sunglassesStrategies'
 
 interface UseHeartGestureDetectorParams {
   videoRef: React.RefObject<HTMLVideoElement | null>
@@ -20,17 +21,28 @@ export function useHeartGestureDetector({
   isLocked,
 }: UseHeartGestureDetectorParams) {
   const landmarkerRef = useRef<HandLandmarker | null>(null)
+  const faceLandmarkerRef = useRef<FaceLandmarker | null>(null)
   const animFrameIdRef = useRef<number | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const gestureStartTimeRef = useRef<number | null>(null)
 
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [loadingText, setLoadingText] = useState<string>('Initializing AI Model...')
+  const [loadingText, setLoadingText] = useState<string>('Initializing AI Models...')
   const [isCameraStarted, setIsCameraStarted] = useState<boolean>(false)
   const [permissionError, setPermissionError] = useState<string | null>(null)
   const [heartDetected, setHeartDetected] = useState<boolean>(false)
   const [holdProgress, setHoldProgress] = useState<number>(0)
   const [matchedGesture, setMatchedGesture] = useState<HandGestureStrategy | null>(null)
+
+  // Face Filter Category 1: Glasses State
+  const [isGlassesEnabled, setIsGlassesEnabled] = useState<boolean>(true)
+  const [selectedGlassesId, setSelectedGlassesId] = useState<string>('classic')
+
+  // Face Filter Category 2: Hat / Headband State
+  const [isHatEnabled, setIsHatEnabled] = useState<boolean>(true)
+  const [selectedHatId, setSelectedHatId] = useState<string>('pj_wedding')
+
+  const [detectedFacesCount, setDetectedFacesCount] = useState<number>(0)
 
   const detectLoop = useCallback(() => {
     if (
@@ -70,6 +82,8 @@ export function useHeartGestureDetector({
     ctx.restore()
 
     const startTimeMs = performance.now()
+
+    // 1. Hand Gesture Detection
     const results = landmarkerRef.current.detectForVideo(video, startTimeMs)
 
     let isGestureFormed = false
@@ -102,6 +116,71 @@ export function useHeartGestureDetector({
       ctx.restore()
     }
 
+    // 2. Face Landmark Multi-Category Detection & Overlay (Up to 3 faces)
+    const isAnyFilterActive = (isGlassesEnabled && selectedGlassesId) || (isHatEnabled && selectedHatId)
+
+    if (isAnyFilterActive && faceLandmarkerRef.current) {
+      const faceResults = faceLandmarkerRef.current.detectForVideo(video, startTimeMs)
+      const faceLandmarks = faceResults.faceLandmarks || []
+      setDetectedFacesCount(faceLandmarks.length)
+
+      if (faceLandmarks.length > 0) {
+        const activeGlassesStrategy = isGlassesEnabled && selectedGlassesId ? getSunglassesStrategy(selectedGlassesId) : null
+        const activeHatStrategy = isHatEnabled && selectedHatId ? getSunglassesStrategy(selectedHatId) : null
+
+        // Process up to 3 faces maximum in standard screen coordinates
+        faceLandmarks.slice(0, 3).forEach((landmarks, faceIdx) => {
+          // Landmark 263/362 = Subject's Left Eye (Appears on Screen Left)
+          const leftInner = landmarks[362] || landmarks[263]
+          const leftOuter = landmarks[263] || landmarks[362]
+          const rawLeftX = (leftInner.x + leftOuter.x) / 2
+          const rawLeftY = (leftInner.y + leftOuter.y) / 2
+
+          // Landmark 33/133 = Subject's Right Eye (Appears on Screen Right)
+          const rightInner = landmarks[133] || landmarks[33]
+          const rightOuter = landmarks[33] || landmarks[133]
+          const rawRightX = (rightInner.x + rightOuter.x) / 2
+          const rawRightY = (rightInner.y + rightOuter.y) / 2
+
+          // Convert to Screen Coordinates (matching mirrored webcam view)
+          const screenLeftX = (1 - rawLeftX) * width
+          const screenLeftY = rawLeftY * height
+
+          const screenRightX = (1 - rawRightX) * width
+          const screenRightY = rawRightY * height
+
+          const sDx = screenRightX - screenLeftX
+          const sDy = screenRightY - screenLeftY
+
+          const distance = Math.sqrt(sDx * sDx + sDy * sDy)
+          const angleRad = Math.atan2(sDy, sDx)
+          const screenCenterX = (screenLeftX + screenRightX) / 2
+          const screenCenterY = (screenLeftY + screenRightY) / 2
+
+          const eyePos = {
+            centerX: screenCenterX,
+            centerY: screenCenterY,
+            distance,
+            angleRad,
+            faceIndex: faceIdx,
+          }
+
+          // Draw Glasses category if enabled
+          if (activeGlassesStrategy) {
+            activeGlassesStrategy.draw(ctx, eyePos)
+          }
+
+          // Draw Hat category if enabled (Combinable with Glasses!)
+          if (activeHatStrategy) {
+            activeHatStrategy.draw(ctx, eyePos)
+          }
+        })
+      }
+    } else {
+      setDetectedFacesCount(0)
+    }
+
+    // 3. Gesture Hold Countdown Locking
     if (isGestureFormed && !isLocked) {
       const now = performance.now()
       if (gestureStartTimeRef.current === null) {
@@ -128,7 +207,16 @@ export function useHeartGestureDetector({
     }
 
     animFrameIdRef.current = requestAnimationFrame(detectLoop)
-  }, [isLocked, onGestureLock, canvasRef, videoRef])
+  }, [
+    isLocked,
+    onGestureLock,
+    canvasRef,
+    videoRef,
+    isGlassesEnabled,
+    selectedGlassesId,
+    isHatEnabled,
+    selectedHatId,
+  ])
 
   useEffect(() => {
     let isMounted = true
@@ -142,20 +230,32 @@ export function useHeartGestureDetector({
 
         if (!isMounted) return
 
-        setLoadingText('Loading Hand Detector Model...')
-        const landmarker = await HandLandmarker.createFromOptions(vision, {
-          baseOptions: {
-            modelAssetPath:
-              'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',
-            delegate: 'GPU',
-          },
-          runningMode: 'VIDEO',
-          numHands: 2,
-        })
+        setLoadingText('Loading Hand & Face AI Models (Max 3 Faces)...')
+        const [handLandmarker, faceLandmarker] = await Promise.all([
+          HandLandmarker.createFromOptions(vision, {
+            baseOptions: {
+              modelAssetPath:
+                'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task',
+              delegate: 'GPU',
+            },
+            runningMode: 'VIDEO',
+            numHands: 2,
+          }),
+          FaceLandmarker.createFromOptions(vision, {
+            baseOptions: {
+              modelAssetPath:
+                'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task',
+              delegate: 'GPU',
+            },
+            runningMode: 'VIDEO',
+            numFaces: 3, // Max 3 faces requirement
+          }),
+        ])
 
         if (!isMounted) return
 
-        landmarkerRef.current = landmarker
+        landmarkerRef.current = handLandmarker
+        faceLandmarkerRef.current = faceLandmarker
         setIsLoading(false)
 
         const constraints = { video: { width: { ideal: 1280 }, height: { ideal: 960 } } }
@@ -202,6 +302,11 @@ export function useHeartGestureDetector({
         landmarkerRef.current.close()
         landmarkerRef.current = null
       }
+
+      if (faceLandmarkerRef.current) {
+        faceLandmarkerRef.current.close()
+        faceLandmarkerRef.current = null
+      }
     }
   }, [canvasRef, videoRef])
 
@@ -232,6 +337,14 @@ export function useHeartGestureDetector({
     holdProgress,
     matchedGesture,
     resetGestureState,
+    isGlassesEnabled,
+    setIsGlassesEnabled,
+    selectedGlassesId,
+    setSelectedGlassesId,
+    isHatEnabled,
+    setIsHatEnabled,
+    selectedHatId,
+    setSelectedHatId,
+    detectedFacesCount,
   }
 }
-

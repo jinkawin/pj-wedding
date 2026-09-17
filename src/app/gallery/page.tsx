@@ -17,7 +17,8 @@ export default function GalleryPage() {
     return GALLERY_ITEMS.filter((item) => {
       const matchesCategory = activeCategory === 'all' || item.category === activeCategory
       const matchesYear = selectedYear === 'all' || item.year === selectedYear
-      return matchesCategory && matchesYear
+
+return matchesCategory && matchesYear
     })
   }, [activeCategory, selectedYear])
 
@@ -29,7 +30,8 @@ export default function GalleryPage() {
       list.push(item)
       map.set(item.year, list)
     })
-    return Array.from(map.entries()).sort(([yearA], [yearB]) => yearA - yearB)
+
+return Array.from(map.entries()).sort(([yearA], [yearB]) => yearA - yearB)
   }, [filteredPhotos])
 
   // Keyboard controls for Lightbox
@@ -41,7 +43,7 @@ export default function GalleryPage() {
   const handlePrev = useCallback(() => {
     if (selectedPhotoIndex === null) return
     setSelectedPhotoIndex((prev) =>
-      (prev ?? 0) === 0 ? filteredPhotos.length - 1 : (prev ?? 0) - 1
+      (prev ?? 0) === 0 ? filteredPhotos.length - 1 : (prev ?? 0) - 1,
     )
   }, [selectedPhotoIndex, filteredPhotos.length])
 
@@ -209,7 +211,8 @@ export default function GalleryPage() {
                   <div className="space-y-8 md:space-y-12">
                     {photos.map((photo, pIdx) => {
                       const isEven = pIdx % 2 === 0
-                      return (
+
+return (
                         <div
                           key={photo.id}
                           className="relative flex flex-col md:flex-row items-center group"

@@ -37,7 +37,8 @@ function getNestedValue(obj: any, path: string): string | undefined {
       return undefined
     }
   }
-  return typeof current === 'string' ? current : undefined
+
+return typeof current === 'string' ? current : undefined
 }
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
@@ -87,5 +88,6 @@ export function useTranslation() {
   if (!context) {
     throw new Error('useTranslation must be used within an I18nProvider')
   }
-  return context
+
+return context
 }

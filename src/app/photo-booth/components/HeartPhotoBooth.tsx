@@ -9,6 +9,7 @@ import {
 } from '../types/polaroidStyles'
 import { useHeartGestureDetector } from '../hooks/useHeartGestureDetector'
 import PolaroidStyleSelector from './PolaroidStyleSelector'
+import FaceSunglassesSelector from './FaceSunglassesSelector'
 
 interface HeartPhotoBoothProps {
   onPhotoCaptured?: (dataUrl: string) => void
@@ -58,18 +59,17 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
 
   // Capture current video frame into offscreen canvas
   const captureCurrentFrame = useCallback((): HTMLCanvasElement | null => {
-    if (!videoRef.current) return null
-    const video = videoRef.current
+    if (!canvasRef.current) return null
+    const sourceCanvas = canvasRef.current
     const offscreen = document.createElement('canvas')
-    offscreen.width = video.videoWidth || 1280
-    offscreen.height = video.videoHeight || 960
+    offscreen.width = sourceCanvas.width || 1280
+    offscreen.height = sourceCanvas.height || 960
 
     const ctx = offscreen.getContext('2d')
     if (!ctx) return null
 
-    ctx.translate(offscreen.width, 0)
-    ctx.scale(-1, 1)
-    ctx.drawImage(video, 0, 0, offscreen.width, offscreen.height)
+    // Draw the processed source canvas (which already has webcam + sunglasses overlay)
+    ctx.drawImage(sourceCanvas, 0, 0, offscreen.width, offscreen.height)
 
     return offscreen
   }, [])
@@ -116,7 +116,7 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
     takeOneShot()
   }, [captureCurrentFrame, generatePolaroidStrip, selectedStyle.shotsRequired])
 
-  // Custom hook for MediaPipe gesture detection
+  // Custom hook for MediaPipe gesture & face landmark detection
   const {
     isLoading,
     loadingText,
@@ -125,6 +125,15 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
     holdProgress,
     matchedGesture,
     resetGestureState,
+    isGlassesEnabled,
+    setIsGlassesEnabled,
+    selectedGlassesId,
+    setSelectedGlassesId,
+    isHatEnabled,
+    setIsHatEnabled,
+    selectedHatId,
+    setSelectedHatId,
+    detectedFacesCount,
   } = useHeartGestureDetector({
     videoRef,
     canvasRef,
@@ -152,7 +161,7 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
   }
 
   return (
-    <div className="w-full flex flex-col items-center justify-center space-y-6">
+    <div className="w-full flex flex-col items-center justify-center space-y-4">
       {/* Hidden Webcam Source Video */}
       <video ref={videoRef} playsInline muted className="hidden" />
 
@@ -164,6 +173,21 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
             onSelectStyle={setSelectedStyle}
           />
         </div>
+      )}
+
+      {/* Face Filter Category Selector */}
+      {!finalPolaroidUrl && !isCapturingSequence && (
+        <FaceSunglassesSelector
+          isGlassesEnabled={isGlassesEnabled}
+          selectedGlassesId={selectedGlassesId}
+          onToggleGlasses={setIsGlassesEnabled}
+          onSelectGlassesId={setSelectedGlassesId}
+          isHatEnabled={isHatEnabled}
+          selectedHatId={selectedHatId}
+          onToggleHat={setIsHatEnabled}
+          onSelectHatId={setSelectedHatId}
+          detectedFacesCount={detectedFacesCount}
+        />
       )}
 
       {/* Main Viewport Container */}
@@ -214,7 +238,7 @@ export default function HeartPhotoBooth({ onPhotoCaptured }: HeartPhotoBoothProp
           </div>
         )}
 
-        {/* Gesture HUD */}
+        {/* Gesture & Face Overlay HUD */}
         {!finalPolaroidUrl && !isLoading && (
           <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
             <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-white flex items-center gap-2">
