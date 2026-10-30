@@ -51,3 +51,7 @@ yarn-error.log*
 
 /tests/load/reports/*
 !/tests/load/reports/.gitkeep
+
+# playwright
+/test-results/
+/playwright-report/
