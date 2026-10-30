@@ -27,6 +27,8 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 const STORAGE_KEY = 'pj_wedding_locale'
 
+const HTML_LANG: Record<Locale, string> = { en: 'en', th: 'th', cn: 'zh', jp: 'ja' }
+
 function getNestedValue(obj: any, path: string): string | undefined {
   const keys = path.split('.')
   let current: any = obj
@@ -51,6 +53,10 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
       setLocaleState(savedLocale)
     }
   }, [])
+
+  useEffect(() => {
+    document.documentElement.lang = HTML_LANG[locale]
+  }, [locale])
 
   const setLocale = (newLocale: Locale) => {
     startTransition(() => {
