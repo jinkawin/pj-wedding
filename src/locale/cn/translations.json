@@ -3,7 +3,8 @@
         "language": "语言",
         "english": "English",
         "thai": "ไทย",
-        "chinese": "中文"
+        "chinese": "中文",
+        "japanese": "日本語"
     },
     "nav": {
         "overview": "婚礼概览",

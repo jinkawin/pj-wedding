@@ -2,7 +2,9 @@
     "common": {
         "language": "ภาษา",
         "english": "English",
-        "thai": "ไทย"
+        "thai": "ไทย",
+        "chinese": "中文",
+        "japanese": "日本語"
     },
     "nav": {
         "overview": "ภาพรวมงาน",
